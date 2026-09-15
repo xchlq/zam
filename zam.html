@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Зам — Ажлын зам чинь эндээс эхэлнэ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Golos+Text:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FCFAF6; --bg-alt:#F4F0E8; --surface:#FFFFFF; --surface-2:#F4F0E8;
+    --text:#181510; --text-muted:#6E695F;
+    --gold:#9A6B1B; --gold-soft:#9A6B1B18;
+    --sage:#3F6B4A; --sage-soft:#3F6B4A16;
+    --red:#AE3B2C; --red-soft:#AE3B2C16;
+    --border:rgba(24,21,16,0.10);
+    --font-display:'PT Serif', Georgia, serif;
+    --font-body:'Golos Text','PT Sans', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --radius:14px;
+    --shadow-sm:0 1px 2px rgba(24,21,16,0.04), 0 6px 20px -8px rgba(24,21,16,0.08);
+    --shadow-md:0 4px 10px rgba(24,21,16,0.05), 0 16px 34px -10px rgba(24,21,16,0.14);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg); color:var(--text); font-family:var(--font-body); line-height:1.5; -webkit-font-smoothing:antialiased;}
+  a{color:inherit; text-decoration:none;}
+  button{font-family:var(--font-body); cursor:pointer;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  ::selection{background:var(--gold); color:#FFF9EF;}
+  :focus-visible{outline:2px solid var(--gold); outline-offset:3px;}
+
+  .road-dot{width:11px; height:11px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 5px var(--gold-soft); flex:none;}
+
+  header{position:sticky; top:0; z-index:50; background:rgba(252,250,246,0.82); backdrop-filter:blur(12px); border-bottom:1px solid var(--border);}
+  nav.wrap{display:flex; align-items:center; justify-content:space-between; height:76px;}
+  .logo{font-family:var(--font-display); font-size:1.6rem; font-weight:700; display:flex; align-items:center; gap:10px; background:none; border:none; color:var(--text); padding:0;}
+  .logo .dash{width:26px; border-top:3px dashed var(--gold);}
+  .nav-links{display:flex; gap:30px; font-size:0.95rem; color:var(--text-muted);}
+  .nav-links button{background:none; border:none; color:var(--text-muted); font-size:0.95rem; transition:color .2s;}
+  .nav-links button:hover{color:var(--text);}
+  .nav-cta{display:flex; gap:12px; align-items:center;}
+  .btn{font-weight:600; font-size:0.92rem; padding:11px 22px; border-radius:999px; border:1px solid var(--border); background:transparent; color:var(--text); transition:all .2s;}
+  .btn:hover{border-color:var(--gold); color:var(--gold); transform:translateY(-1px);}
+  .btn-solid{background:var(--gold); border-color:var(--gold); color:#FFF9EF; box-shadow:var(--shadow-sm);}
+  .btn-solid:hover{background:#B27F26; border-color:#B27F26; color:#FFF9EF; box-shadow:var(--shadow-md);}
+  .btn-ghost{border-color:transparent; padding:11px 6px;}
+  .btn-sm{padding:8px 16px; font-size:0.85rem;}
+  .nav-toggle{display:none; background:none; border:none; color:var(--text); font-size:1.6rem;}
+
+  .view{display:none;}
+  .view.active{display:block;}
+
+  .hero{padding:100px 0 80px; position:relative; overflow:hidden;}
+  .hero-mesh{position:absolute; inset:-15% -10% auto -10%; height:150%; z-index:0; pointer-events:none;}
+  .hero-mesh::before, .hero-mesh::after{content:""; position:absolute; border-radius:50%; filter:blur(80px);}
+  .hero-mesh::before{width:460px; height:460px; background:var(--gold); opacity:0.22; top:-140px; right:-40px;}
+  .hero-mesh::after{width:400px; height:400px; background:var(--sage); opacity:0.16; bottom:-160px; left:6%;}
+  .hero .wrap{position:relative; z-index:1;}
+  .eyebrow{font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:10px; margin-bottom:22px;}
+  h1{font-family:var(--font-display); font-weight:700; font-size:clamp(2.3rem,5vw,3.7rem); line-height:1.12; max-width:820px; letter-spacing:-0.01em;}
+  h1 em{color:var(--gold); font-style:normal;}
+  .hero-sub{margin-top:22px; font-size:1.12rem; color:var(--text-muted); max-width:560px;}
+  .search-box{margin-top:38px; background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:8px; display:flex; gap:8px; max-width:640px; flex-wrap:wrap;}
+  .search-box input{flex:1; min-width:200px; background:transparent; border:none; color:var(--text); font-family:var(--font-body); font-size:1rem; padding:14px 16px; outline:none;}
+  .search-box input::placeholder{color:var(--text-muted);}
+  .hero-stats{display:flex; gap:40px; margin-top:52px; flex-wrap:wrap;}
+  .hero-stats .stat b{font-family:var(--font-mono); font-size:1.7rem; color:var(--gold); display:block;}
+  .hero-stats .stat span{color:var(--text-muted); font-size:0.86rem;}
+
+  section{padding:90px 0;}
+  .section-alt{background:var(--bg-alt);}
+  .kicker{font-family:var(--font-mono); font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--sage); margin-bottom:14px;}
+  h2{font-family:var(--font-display); font-weight:700; font-size:clamp(1.7rem,3vw,2.3rem); max-width:640px; margin-bottom:14px;}
+  .section-sub{color:var(--text-muted); max-width:560px; font-size:1.02rem;}
+  .section-head{margin-bottom:50px; display:flex; justify-content:space-between; align-items:flex-end; gap:20px; flex-wrap:wrap;}
+
+  .feature-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
+  .feature-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:28px 24px; transition:transform .25s, border-color .25s, box-shadow .25s; box-shadow:var(--shadow-sm);}
+  .feature-card:hover{transform:translateY(-4px); border-color:var(--gold); box-shadow:var(--shadow-md);}
+  .feature-icon{width:42px; height:42px; border-radius:10px; background:linear-gradient(135deg, var(--gold-soft), transparent); display:flex; align-items:center; justify-content:center; margin-bottom:18px; color:var(--gold); font-size:1.2rem;}
+  .feature-card h3{font-size:1.04rem; font-weight:700; margin-bottom:9px;}
+  .feature-card p{color:var(--text-muted); font-size:0.92rem;}
+  .feature-tag{display:inline-block; margin-top:14px; font-family:var(--font-mono); font-size:0.72rem; color:var(--sage); background:var(--sage-soft); padding:4px 10px; border-radius:6px;}
+  .feature-link{display:block; margin-top:14px; font-size:0.85rem; color:var(--gold); background:none; border:none; padding:0; text-align:left;}
+  .feature-link:hover{text-decoration:underline;}
+
+  .journey{position:relative; padding-left:6px;}
+  .journey-item{display:flex; gap:26px; position:relative; padding-bottom:52px;}
+  .journey-item:last-child{padding-bottom:0;}
+  .journey-line{position:relative; display:flex; flex-direction:column; align-items:center;}
+  .journey-line::before{content:""; position:absolute; top:26px; bottom:-52px; left:50%; width:0; border-left:3px dashed var(--border); transform:translateX(-50%);}
+  .journey-item:last-child .journey-line::before{display:none;}
+  .journey-num{width:44px; height:44px; border-radius:50%; background:var(--surface); border:2px solid var(--gold); color:var(--gold); font-family:var(--font-mono); font-weight:600; display:flex; align-items:center; justify-content:center; flex:none; z-index:2;}
+  .journey-body h3{font-size:1.12rem; margin-bottom:8px;}
+  .journey-body p{color:var(--text-muted); font-size:0.95rem; max-width:520px;}
+  .journey-body .journey-tag{font-family:var(--font-mono); font-size:0.72rem; color:var(--text-muted); margin-top:10px; display:block;}
+
+  .recommend-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  .rec-card{background:var(--surface); border:1px solid var(--gold); border-radius:var(--radius); padding:22px; cursor:pointer; transition:transform .2s, box-shadow .2s; box-shadow:var(--shadow-sm);}
+  .rec-card:hover{transform:translateY(-3px); box-shadow:var(--shadow-md);}
+  .rec-reasons{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px;}
+  .rec-reason{font-size:0.76rem; font-family:var(--font-mono); background:var(--sage-soft); color:var(--sage); padding:4px 10px; border-radius:6px;}
+
+  .job-toolbar{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px;}
+  .chip{font-size:0.86rem; padding:9px 18px; border-radius:999px; border:1px solid var(--border); background:var(--surface); color:var(--text-muted); transition:all .2s;}
+  .chip.active, .chip:hover{border-color:var(--gold); color:var(--gold);}
+  .job-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
+  .job-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px; display:flex; flex-direction:column; gap:14px; transition:border-color .2s, transform .2s, box-shadow .2s; text-align:left; width:100%; box-shadow:var(--shadow-sm);}
+  .job-card:hover{border-color:var(--gold); transform:translateY(-3px); box-shadow:var(--shadow-md);}
+  .job-top{display:flex; justify-content:space-between; align-items:flex-start; gap:14px;}
+  .job-title{font-weight:700; font-size:1.04rem;}
+  .job-company{color:var(--text-muted); font-size:0.88rem; margin-top:3px; background:none; border:none; padding:0; text-align:left; font-family:var(--font-body); cursor:pointer;}
+  .job-company:hover{color:var(--gold); text-decoration:underline;}
+  .intl-pill{font-family:var(--font-mono); font-size:0.7rem; color:var(--gold); background:var(--gold-soft); padding:4px 9px; border-radius:6px; white-space:nowrap; align-self:flex-start;}
+  .job-badge{font-family:var(--font-mono); font-size:0.7rem; color:var(--sage); background:var(--sage-soft); padding:4px 9px; border-radius:6px; white-space:nowrap;}
+  .job-meta{display:flex; gap:16px; flex-wrap:wrap; font-size:0.84rem; color:var(--text-muted);}
+  .job-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:10px; border-top:1px dashed var(--border);}
+  .job-salary{font-family:var(--font-mono); color:var(--gold); font-size:0.98rem; font-weight:600;}
+  .job-more{font-size:0.82rem; color:var(--gold);}
+
+  .cat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .cat-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:22px; text-align:left; transition:border-color .2s, transform .2s, box-shadow .2s; color:var(--text); box-shadow:var(--shadow-sm);}
+  .cat-card:hover{border-color:var(--gold); transform:translateY(-3px); box-shadow:var(--shadow-md);}
+  .cat-card .n{font-family:var(--font-mono); color:var(--text-muted); font-size:0.78rem;}
+  .cat-card h4{margin-top:8px; font-size:0.98rem;}
+  .cat-card .cnt{margin-top:6px; font-size:0.8rem; color:var(--sage);}
+
+  .salary-note{font-family:var(--font-mono); font-size:0.76rem; color:var(--text-muted); margin-bottom:30px; display:block;}
+  .bar-row{display:grid; grid-template-columns:150px 1fr 90px; align-items:center; gap:16px; padding:13px 0; border-bottom:1px solid var(--border); font-size:0.92rem;}
+  .bar-row:last-child{border-bottom:none;}
+  .bar-track{background:var(--bg-alt); border-radius:6px; height:10px; overflow:hidden;}
+  .bar-fill{height:100%; background:linear-gradient(90deg, var(--sage), var(--gold));}
+  .bar-val{font-family:var(--font-mono); color:var(--gold); text-align:right; font-size:0.88rem;}
+
+  .cta{background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:56px 46px; display:flex; justify-content:space-between; align-items:center; gap:30px; flex-wrap:wrap; box-shadow:var(--shadow-sm);}
+  .cta h2{margin-bottom:10px;}
+  .cta p{color:var(--text-muted); max-width:460px;}
+  .cta-actions{display:flex; gap:12px; flex-wrap:wrap;}
+
+  footer{border-top:1px solid var(--border); padding:44px 0 34px; color:var(--text-muted); font-size:0.86rem;}
+  .footer-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+  .footer-links{display:flex; gap:22px;}
+  .footer-links button{background:none;border:none;color:var(--text-muted);font-size:0.86rem;}
+  .footer-links button:hover{color:var(--text);}
+
+  /* sub-views */
+  .subview-head{padding:40px 0 0;}
+  .back-btn{background:none; border:none; color:var(--text-muted); font-size:0.9rem; display:inline-flex; gap:8px; align-items:center; margin-bottom:26px;}
+  .back-btn:hover{color:var(--gold);}
+  .job-detail-layout{display:grid; grid-template-columns:1.6fr 1fr; gap:36px; align-items:start;}
+  .job-detail-main{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:36px; box-shadow:var(--shadow-sm);}
+  .job-detail-main h1{font-size:clamp(1.6rem,3vw,2.1rem);}
+  .jd-meta{display:flex; gap:14px; flex-wrap:wrap; margin:18px 0 6px; color:var(--text-muted); font-size:0.9rem;}
+  .jd-fresh{font-family:var(--font-mono); font-size:0.78rem; color:var(--sage); margin-top:6px; display:block;}
+  .jd-block{margin-top:30px;}
+  .jd-block h3{font-size:1.02rem; margin-bottom:12px;}
+  .jd-block ul{padding-left:20px; color:var(--text-muted); font-size:0.94rem; display:flex; flex-direction:column; gap:8px;}
+  .job-detail-side{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:28px; position:sticky; top:100px; box-shadow:var(--shadow-sm);}
+  .side-salary{font-family:var(--font-mono); font-size:1.3rem; color:var(--gold); font-weight:700;}
+  .side-row{display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid var(--border); font-size:0.88rem; color:var(--text-muted);}
+  .side-row:last-of-type{border-bottom:none;}
+  .apply-status{margin-top:18px; font-size:0.84rem; color:var(--sage); font-family:var(--font-mono);}
+
+  /* CV view */
+  .cv-layout{display:grid; grid-template-columns:1fr 1fr; gap:32px; align-items:start;}
+  .cv-form{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:30px; display:flex; flex-direction:column; gap:16px; box-shadow:var(--shadow-sm);}
+  .field label{display:block; font-size:0.85rem; color:var(--text-muted); margin-bottom:7px;}
+  .field input, .field textarea, .field select{width:100%; background:var(--bg-alt); border:1px solid var(--border); border-radius:8px; padding:11px 13px; color:var(--text); font-family:var(--font-body); font-size:0.94rem;}
+  .theme-picker{display:flex; gap:10px;}
+  .theme-swatch{width:34px; height:34px; border-radius:8px; border:2px solid transparent; cursor:pointer;}
+  .theme-swatch.selected{border-color:var(--text);}
+  .cv-preview{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:30px; min-height:340px; box-shadow:var(--shadow-sm);}
+  .cv-preview-card{border-radius:10px; padding:24px; background:var(--bg-alt); border-top:5px solid var(--gold);}
+  .cv-feedback{margin-top:24px; display:none; flex-direction:column; gap:14px;}
+  .cv-feedback.show{display:flex;}
+  .fb-item{border-left:3px solid var(--sage); padding:6px 0 6px 14px; font-size:0.9rem;}
+  .fb-item b{display:block; margin-bottom:3px; color:var(--sage); font-size:0.82rem; text-transform:uppercase; letter-spacing:0.06em; font-family:var(--font-mono);}
+  .fb-item span{color:var(--text-muted);}
+
+  /* tracker */
+  .track-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:26px; margin-bottom:18px; box-shadow:var(--shadow-sm);}
+  .track-top{display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap;}
+  .track-stages{display:flex; align-items:center; margin-top:22px;}
+  .track-stage{flex:1; text-align:center; position:relative;}
+  .track-stage .dot{width:16px; height:16px; border-radius:50%; background:var(--bg-alt); border:2px solid var(--border); margin:0 auto 8px; position:relative; z-index:2;}
+  .track-stage.done .dot{background:var(--gold); border-color:var(--gold);}
+  .track-stage .lbl{font-size:0.76rem; color:var(--text-muted);}
+  .track-stage.done .lbl{color:var(--text);}
+  .track-stage::before{content:""; position:absolute; top:7px; left:-50%; width:100%; height:0; border-top:2px dashed var(--border); z-index:1;}
+  .track-stage:first-child::before{display:none;}
+  .track-stage.done::before{border-top-color:var(--gold);}
+  .track-updated{margin-top:16px; font-family:var(--font-mono); font-size:0.78rem; color:var(--text-muted);}
+  .empty-state{text-align:center; padding:60px 20px; color:var(--text-muted);}
+  .empty-state h3{color:var(--text); margin-bottom:10px; font-family:var(--font-display); font-size:1.3rem;}
+
+  /* modal + toast */
+  .overlay{position:fixed; inset:0; background:rgba(24,21,16,0.5); backdrop-filter:blur(4px); z-index:100; display:none; align-items:center; justify-content:center; padding:20px;}
+  .overlay.show{display:flex;}
+  .modal{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:34px; width:100%; max-width:380px; box-shadow:var(--shadow-md);}
+  .modal h3{font-family:var(--font-display); font-size:1.3rem; margin-bottom:18px;}
+  .modal .field{margin-bottom:14px;}
+  .toast{position:fixed; bottom:26px; left:50%; transform:translate(-50%, 20px); background:var(--gold); color:#FFF9EF; font-weight:600; padding:13px 24px; border-radius:999px; font-size:0.9rem; z-index:200; opacity:0; transition:all .3s; pointer-events:none; box-shadow:var(--shadow-md);}
+  .toast.show{opacity:1; transform:translate(-50%,0);}
+
+  .jd-company-link{background:none; border:none; padding:0; color:var(--text); font-size:0.9rem; cursor:pointer; text-decoration:underline; text-decoration-color:var(--border); font-family:var(--font-body);}
+  .jd-company-link:hover{color:var(--gold);}
+
+  .demand-row{display:grid; grid-template-columns:150px 1fr 30px 70px; align-items:center; gap:16px; padding:13px 6px; border-bottom:1px solid var(--border); font-size:0.92rem; width:100%; background:none; border-left:none; border-right:none; border-top:none; color:var(--text); text-align:left; cursor:pointer; border-radius:6px;}
+  .demand-row:hover{background:var(--bg-alt);}
+  .demand-row:last-child{border-bottom:none;}
+  .trend{font-family:var(--font-mono); text-align:center;}
+  .trend.up{color:var(--sage);}
+  .trend.down{color:var(--red);}
+  .trend.stable{color:var(--text-muted);}
+  .demand-val{font-family:var(--font-mono); color:var(--gold); text-align:right; font-size:0.86rem;}
+
+  .company-header{display:flex; gap:20px; align-items:center; margin-bottom:32px;}
+  .company-logo{width:64px; height:64px; border-radius:14px; background:var(--gold-soft); color:var(--gold); font-family:var(--font-display); font-size:1.6rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex:none;}
+  .company-header h1{font-family:var(--font-display); font-size:clamp(1.5rem,3vw,2rem);}
+  .company-layout{display:grid; grid-template-columns:1.6fr 1fr; gap:36px; align-items:start; margin-bottom:36px;}
+
+  @media (max-width:900px){
+    .feature-grid, .recommend-grid{grid-template-columns:repeat(2,1fr);}
+    .job-grid{grid-template-columns:1fr;}
+    .cat-grid{grid-template-columns:repeat(2,1fr);}
+    .job-detail-layout, .cv-layout, .company-layout{grid-template-columns:1fr;}
+  }
+  @media (max-width:680px){
+    .nav-links{display:none;}
+    .nav-toggle{display:block;}
+    .feature-grid, .recommend-grid, .cat-grid{grid-template-columns:1fr;}
+    .bar-row{grid-template-columns:100px 1fr 60px; gap:10px;}
+    .demand-row{grid-template-columns:96px 1fr 24px 54px; gap:8px; font-size:0.84rem;}
+    .company-header{flex-direction:column; align-items:flex-start;}
+    .cta{flex-direction:column; align-items:flex-start;}
+    .track-stages{flex-direction:column; align-items:flex-start; gap:14px;}
+    .track-stage::before{display:none;}
+  }
+
+  [data-reveal]{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+  [data-reveal].in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    [data-reveal]{opacity:1; transform:none; transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <button class="logo" onclick="showView('home')"><span>Зам</span><span class="dash"></span></button>
+    <div class="nav-links">
+      <button onclick="showView('home','#jobs')">Ажлын байр</button>
+      <button onclick="showView('home','#salary')">Цалингийн мэдээлэл</button>
+      <button onclick="showView('tracker')">Миний зам</button>
+      <button onclick="showView('employer')">Байгууллагад</button>
+    </div>
+    <div class="nav-cta">
+      <button class="btn" onclick="openLogin()">Нэвтрэх</button>
+      <button class="btn btn-solid" onclick="showView('cv')">CV байршуулах</button>
+    </div>
+    <button class="nav-toggle" aria-label="Цэс">☰</button>
+  </nav>
+</header>
+
+<!-- ============ HOME ============ -->
+<main id="view-home" class="view active">
+
+<section class="hero">
+  <div class="hero-mesh" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="road-dot"></span>МОНГОЛЫН АЖЛЫН ЗАХ ЗЭЭЛ</div>
+    <h1>Ажлын зам чинь <em>эндээс</em> эхэлнэ</h1>
+    <p class="hero-sub">Нэг CV — олон боломж. Танд тохирсон ажлыг санал болгоод, цалингийн хэмжээг нуулгүй харуулж, хайлтын явц бүрийг чинь үнэн зөвөөр дагаж явдаг платформ.</p>
+    <div class="search-box">
+      <input type="text" id="heroSearch" placeholder="Ямар ажил хайж байна вэ? — жишээ нь “фронтэнд хөгжүүлэгч”">
+      <button class="btn btn-solid" onclick="runSearch()">Хайх</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><b id="statActive">–</b><span>идэвхтэй ажлын байр</span></div>
+      <div class="stat"><b>100%</b><span>цалинтай зарууд</span></div>
+      <div class="stat"><b>3.4 өдөр</b><span>дундаж хариу хугацаа</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <div>
+        <div class="kicker">Яагаад Зам</div>
+        <h2>Ажил хайх дөрвөн бэрхшээлийг нэг дор шийдсэн</h2>
+        <p class="section-sub">Одоо байгаа платформуудын хэрэглэгчдийн шүүмжилсэн дутагдлуудыг тодорхой засварласан.</p>
+      </div>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card" data-reveal>
+        <div class="feature-icon">◎</div>
+        <h3>Бодит тохирол — санамсаргүй биш</h3>
+        <p>"Тохирч болох ажлууд" гэдэг нь бусад сайтад заримдаа огт хамааралгүй санал болгодог. Зам дээр бид тохирсон шалтгааныг тодорхой харуулна.</p>
+        <span class="feature-tag">Зассан: түгээмэл гомдол</span>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-icon">₮</div>
+        <h3>Цалин ярилцлагын дараа биш, эхнээс</h3>
+        <p>Зарим сайт цалинг зөвхөн ярилцлагын дараа мэдэгддэг. Энд ажлын байр бүрт доод, дээд хязгаар заавал харагдана.</p>
+        <span class="feature-tag">Зассан: нуугдмал цалин</span>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-icon">⇪</div>
+        <h3>Дэлгэрэнгүй, тодорхой AI зөвлөмж</h3>
+        <p>Богино, ерөнхий "сайжруулаарай" гэсэн зөвлөмжийн оронд CV-г чинь ангилал тус бүрээр — формат, түлхүүр үг, тоон үзүүлэлт — задлан үзнэ.</p>
+        <span class="feature-tag">Зассан: богино AI зөвлөмж</span>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-icon">↻</div>
+        <h3>Явцын статус — үнэн зөв</h3>
+        <p>Ажил олгогчоос ирсэн сүүлийн шинэчлэлт л харагдана. Хуучин, буруу статус (жишээ нь: "даалгавар авсан" гэж худал харагдах) энд гарахгүй.</p>
+        <button class="feature-link" onclick="showView('tracker')">Миний замыг харах →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <div>
+        <div class="kicker">Танд тохирсон</div>
+        <h2>Ур чадварт чинь тулгуурласан санал</h2>
+        <p class="section-sub">Жишээ профайл: React, JavaScript, Node.js. Тохирсон шалтгааныг доор тодорхой бичсэн — зөвхөн ойролцоо ажил биш.</p>
+      </div>
+    </div>
+    <div class="recommend-grid" id="recGrid" data-reveal></div>
+  </div>
+</section>
+
+<section id="returnee" class="section-alt">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <div>
+        <div class="kicker">Гадаадаас ирсэн төгсөгчдөд</div>
+        <h2>Гадаадад сурч, буцаж ирсэн бол</h2>
+        <p class="section-sub">Диплом баталгаажуулах, тохирох ажил олох алхмуудыг нэг дор.</p>
+      </div>
+    </div>
+    <div class="feature-grid" style="grid-template-columns:repeat(3,1fr);">
+      <div class="feature-card" data-reveal>
+        <div class="feature-icon">📄</div>
+        <h3>Сурч байхдаа бүртгүүлээрэй</h3>
+        <p>Гадаадад сурч байх хугацаандаа жил бүрийн 10-р сард багтаж Боловсролын Ерөнхий Газарт (БЕГ) мэдээллээ цахимаар бүртгүүлэх шаардлагатай — эс бөгөөс төгссөний дараа диплом хүлээн зөвшөөрөгдөхөд хүндрэл гарч болно.</p>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-icon">✓</div>
+        <h3>Төгссөний дараах баталгаажуулалт</h3>
+        <p>Боловсролын магадлан итгэмжлэх үндэсний зөвлөл (БМИҮЗ) дипломыг баталгаажуулж, БЕГ-т дамжуулна. Нотариатаар баталгаажсан хуулбар, албан ёсны орчуулга урьдчилан бэлдээрэй.</p>
+      </div>
+      <div class="feature-card" data-reveal>
+        <div class="feature-icon">🌍</div>
+        <h3>Гадаад дипломыг үнэлдэг компаниуд</h3>
+        <p>Доор 🌍 тэмдэгтэй ажлын зарууд нь олон улсын туршлага, гадаад хэлтэй горилогчдод давуу тал өгдөг байгууллагууд.</p>
+      </div>
+    </div>
+    <span class="salary-note" style="display:block; margin-top:20px;">Дээрх журам БШУЯ-ны нийтэд мэдээлсэн процесст үндэслэсэн бөгөөд өөрчлөгдөж болзошгүй тул эцсийн мэдээллийг moe.gov.mn дээрээс шалгаарай.</span>
+    <div class="job-grid" id="intlJobGrid" style="margin-top:32px;" data-reveal></div>
+  </div>
+</section>
+
+<section id="journey">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <div>
+        <div class="kicker">Хэрхэн ажилладаг вэ</div>
+        <h2>Дөрвөн алхамтай зам</h2>
+        <p class="section-sub">Бүртгүүлснээс ажилд орох хүртэлх бүх алхмыг нэг дэлгэц дээрээс хянана.</p>
+      </div>
+    </div>
+    <div class="journey" data-reveal>
+      <div class="journey-item">
+        <div class="journey-line"><div class="journey-num">01</div></div>
+        <div class="journey-body"><h3>Профайлаа үүсгэх</h3><p>CV-гээ хавсаргах эсвэл эндээс шинээр бөглөх. Профайлаа нуугдмал болгож, зөвхөн ажил олгогчийн нүдэнд харагдуулж болно.</p><span class="journey-tag">~ 5 минут</span></div>
+      </div>
+      <div class="journey-item">
+        <div class="journey-line"><div class="journey-num">02</div></div>
+        <div class="journey-body"><h3>Тохирох ажлыг олох</h3><p>Ангилал, цалин, байршлаар шүүж хайх, эсвэл өдөр бүр ирэх хувийн саналуудаас сонгох.</p><span class="journey-tag">Автомат мэдэгдэл</span></div>
+      </div>
+      <div class="journey-item">
+        <div class="journey-line"><div class="journey-num">03</div></div>
+        <div class="journey-body"><h3>Нэг товчоор илгээх</h3><p>CV-г нь дахин бөглөхгүйгээр илгээгээд, "Миний зам" цэснээс статусыг нь хянана.</p><span class="journey-tag">Бодит статус</span></div>
+      </div>
+      <div class="journey-item">
+        <div class="journey-line"><div class="journey-num">04</div></div>
+        <div class="journey-body"><h3>Санал хүлээж авах</h3><p>Ажлын санал ирэхэд цалин, нөхцөлийг өмнөх ярилцлагуудтайгаа харьцуулаад шийдвэрээ гаргана.</p><span class="journey-tag">Эцсийн алхам</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="jobs" class="section-alt">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <div>
+        <div class="kicker">Идэвхтэй байгууллагуудаас</div>
+        <h2>Ажлын байрууд</h2>
+        <p class="section-sub">Жишээ өгөгдөл — бодит ажлын зарууд биш. Дэлгэрэнгүйг үзэхийг дараарай.</p>
+      </div>
+    </div>
+    <div class="job-toolbar" id="chips"></div>
+    <div class="job-grid" id="jobGrid" data-reveal></div>
+  </div>
+</section>
+
+<section id="categories">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <div><div class="kicker">Ангилал</div><h2>Салбараар нь хайх</h2></div>
+    </div>
+    <div class="cat-grid" id="catGrid" data-reveal></div>
+  </div>
+</section>
+
+<section id="demand">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <div>
+        <div class="kicker">Ажилтны эрэлт</div>
+        <h2>Аль салбарт хамгийн их шаардлагатай байна вэ?</h2>
+        <span class="salary-note">Жишээ өгөгдөл — идэвхтэй ажлын байрны тоонд үндэслэсэн жишээ үзүүлэлт, албан ёсны статистик биш</span>
+      </div>
+    </div>
+    <div id="demandList" data-reveal></div>
+  </div>
+</section>
+
+<section id="salary" class="section-alt">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <div>
+        <div class="kicker">Цалингийн мэдээлэл</div>
+        <h2>Ангилал тус бүрийн дундаж цалин</h2>
+        <span class="salary-note">Жишээ өгөгдөл — сар бүрийн дундаж, ₮ сая</span>
+      </div>
+    </div>
+    <div data-reveal>
+      <div class="bar-row"><span>IT / Технологи</span><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div><span class="bar-val">3.2 сая</span></div>
+      <div class="bar-row"><span>Хууль</span><div class="bar-track"><div class="bar-fill" style="width:82%"></div></div><span class="bar-val">3.0 сая</span></div>
+      <div class="bar-row"><span>Санхүү</span><div class="bar-track"><div class="bar-fill" style="width:76%"></div></div><span class="bar-val">2.8 сая</span></div>
+      <div class="bar-row"><span>Барилга</span><div class="bar-track"><div class="bar-fill" style="width:68%"></div></div><span class="bar-val">2.5 сая</span></div>
+      <div class="bar-row"><span>Маркетинг</span><div class="bar-track"><div class="bar-fill" style="width:63%"></div></div><span class="bar-val">2.3 сая</span></div>
+      <div class="bar-row"><span>Ложистик</span><div class="bar-track"><div class="bar-fill" style="width:58%"></div></div><span class="bar-val">2.1 сая</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="cta" data-reveal>
+      <div><h2>CV-гээ бэлдчихсэн үү?</h2><p>Байршуулаад, танд тохирох эхний саналуудыг өнөөдрөөс аваарай.</p></div>
+      <div class="cta-actions">
+        <button class="btn btn-solid" onclick="showView('cv')">CV байршуулах</button>
+        <button class="btn" onclick="showView('home','#jobs')">Эхлээд ажлын байр харах</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ JOB DETAIL ============ -->
+<main id="view-job" class="view">
+  <div class="wrap subview-head">
+    <button class="back-btn" onclick="showView('home','#jobs')">← Ажлын байруудад буцах</button>
+  </div>
+  <div class="wrap" style="padding-bottom:90px;">
+    <div class="job-detail-layout" id="jobDetailContent"></div>
+  </div>
+</main>
+
+<!-- ============ CV BUILDER ============ -->
+<main id="view-cv" class="view">
+  <div class="wrap subview-head">
+    <button class="back-btn" onclick="showView('home')">← Нүүр хуудас руу буцах</button>
+    <div class="kicker">CV байршуулах</div>
+    <h2>CV-гээ нэг л удаа бөглөнө</h2>
+    <p class="section-sub" style="margin-bottom:36px;">Загвар, өнгөө сонгоод хадгалахад дэлгэрэнгүй, ангилал тус бүрээр задалсан зөвлөмж өгнө — ерөнхий нэг мөр зөвлөмж биш.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:90px;">
+    <div class="cv-layout">
+      <form class="cv-form" id="cvForm">
+        <div class="field"><label for="cvName">Овог нэр</label><input id="cvName" type="text" placeholder="Бат-Эрдэнэ Ганбаатар" required></div>
+        <div class="field"><label for="cvRole">Зорьж буй мэргэжил</label><input id="cvRole" type="text" placeholder="Фронтэнд хөгжүүлэгч" required></div>
+        <div class="field"><label for="cvSkills">Ур чадвар (таслалаар тусгаарлана)</label><input id="cvSkills" type="text" placeholder="React, JavaScript, Figma"></div>
+        <div class="field"><label for="cvSummary">Товч танилцуулга</label><textarea id="cvSummary" rows="3" placeholder="2 жилийн туршлагатай..."></textarea></div>
+        <div class="field"><label for="cvEducation">Боловсрол</label><input id="cvEducation" type="text" placeholder="ШУТИС, Компьютерийн ухаан, 2024"></div>
+        <div class="field"><label for="cvExperience">Ажлын туршлага (мөр бүрт нэгийг бичнэ)</label><textarea id="cvExperience" rows="3" placeholder="Модон Тек — Дадлагажигч хөгжүүлэгч, 2024-2025
+Фрилансаар 3 веб төсөл хийсэн"></textarea></div>
+        <div class="field"><label for="cvLang">Хэл мэдлэг</label><input id="cvLang" type="text" placeholder="Монгол (төрөлх), Англи (дунд шатнаас дээш)"></div>
+        <div class="field"><label for="cvLink">Портфолио / LinkedIn холбоос</label><input id="cvLink" type="text" placeholder="github.com/tanii-nername"></div>
+        <div class="field"><label for="cvFile">Бэлэн CV хавсаргах (заавал биш)</label><input id="cvFile" type="file"></div>
+        <div class="field">
+          <label>Загварын өнгө</label>
+          <div class="theme-picker">
+            <button type="button" class="theme-swatch selected" data-theme="gold" style="background:#9A6B1B" onclick="setCvTheme('gold',this)"></button>
+            <button type="button" class="theme-swatch" data-theme="sage" style="background:#3F6B4A" onclick="setCvTheme('sage',this)"></button>
+            <button type="button" class="theme-swatch" data-theme="red" style="background:#AE3B2C" onclick="setCvTheme('red',this)"></button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-solid" style="margin-top:6px;">Хадгалж, зөвлөмж авах</button>
+      </form>
+      <div>
+        <div class="cv-preview">
+          <div class="cv-preview-card" id="cvPreviewCard" style="border-top-color:#9A6B1B;">
+            <div style="font-family:var(--font-display); font-size:1.3rem; font-weight:700;" id="pvName">Овог нэр</div>
+            <div style="color:var(--text-muted); margin-top:4px;" id="pvRole">Зорьж буй мэргэжил</div>
+            <div style="margin-top:16px; font-size:0.88rem; color:var(--text-muted);" id="pvSummary">Танилцуулга энд харагдана.</div>
+            <div style="margin-top:14px; font-size:0.84rem; color:var(--text-muted);" id="pvEducation"></div>
+            <div style="margin-top:10px; font-size:0.84rem; color:var(--text-muted);" id="pvLang"></div>
+            <div style="margin-top:16px; display:flex; gap:8px; flex-wrap:wrap;" id="pvSkills"></div>
+          </div>
+        </div>
+        <div class="cv-feedback" id="cvFeedback">
+          <div class="fb-item"><b>Формат</b><span>Ажлын туршлагаа он дараалалаар (сүүлийн ажлаас эхлээд) байрлуулсан бол зөв. Нэг хуудсанд багтаах нь ихэнх ажил олгогчид хүлээн зөвшөөрөгддөг.</span></div>
+          <div class="fb-item"><b>Түлхүүр үг тохирол</b><span id="fbKeywords">Зорьж буй ажлын зарын шаардлагад байгаа тодорхой технологи/хэрэгслийн нэрсийг CV-даа шууд дурдвал автомат шүүлтэд илүү сайн харагдана.</span></div>
+          <div class="fb-item"><b>Тоон үзүүлэлт</b><span>"Хариуцаж ажилласан" гэхийн оронд "3 хүний багийг удирдсан", "ачааллыг 20%-иар бууруулсан" гэх мэт тоогоор илэрхийлбэл итгэл төрүүлнэ.</span></div>
+          <div class="fb-item"><b>Ажлын туршлагын харуулалт</b><span id="fbExperience">Ажлын туршлага бүрийг "юу хийсэн" төдийгүй "ямар үр дүнд хүрсэн"-ийг тусад нь бичвэл илүү итгэл төрүүлнэ.</span></div>
+          <div class="fb-item"><b>Хэл мэдлэг</b><span id="fbLang">Хэлний түвшнээ тодорхой заавал (жишээ нь "дунд шат" гэхээсээ "B2 түвшин" гэх мэт олон улсын жишиг ашиглавал илүү тодорхой).</span></div>
+          <div class="fb-item"><b>Урт</b><span>Товч, тодорхой байгаа нь давуу тал. Хэт ерөнхий өгүүлбэрийг тодорхой жишээгээр солиорой.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ============ TRACKER (Миний зам) ============ -->
+<main id="view-tracker" class="view">
+  <div class="wrap subview-head">
+    <button class="back-btn" onclick="showView('home')">← Нүүр хуудас руу буцах</button>
+    <div class="kicker">Миний зам</div>
+    <h2>Илгээсэн CV-гийн явц</h2>
+    <p class="section-sub" style="margin-bottom:36px;">Ажил олгогчоос ирсэн сүүлийн баталгаажсан шинэчлэлт л энд харагдана — таамаглал, хуучин статус гарахгүй.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:90px;">
+    <div id="trackerList"></div>
+  </div>
+</main>
+
+<!-- ============ COMPANY PROFILE ============ -->
+<main id="view-company" class="view">
+  <div class="wrap subview-head">
+    <button class="back-btn" onclick="showView('home','#jobs')">← Ажлын байруудад буцах</button>
+  </div>
+  <div class="wrap" style="padding-bottom:90px;">
+    <div id="companyContent"></div>
+  </div>
+</main>
+
+<!-- ============ EMPLOYER / POST A JOB ============ -->
+<main id="view-employer" class="view">
+  <div class="wrap subview-head">
+    <button class="back-btn" onclick="showView('home')">← Нүүр хуудас руу буцах</button>
+    <div class="kicker">Байгууллагад зориулсан</div>
+    <h2>Ажлын байраа энд нийтлээрэй</h2>
+    <p class="section-sub" style="margin-bottom:36px;">Бүртгэлтэй байгууллага сонгоод мэдээллээ бөглөхөд, зар шууд идэвхтэй жагсаалт болон компанийн профайл хуудсанд нэмэгдэнэ.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:90px;">
+    <div class="cv-layout">
+      <form class="cv-form" id="jobPostForm">
+        <div class="field"><label for="jpCompany">Байгууллага</label><select id="jpCompany" required></select></div>
+        <div class="field"><label for="jpTitle">Ажлын байрны нэр</label><input id="jpTitle" type="text" placeholder="Жишээ нь: Маркетингийн шинжээч" required></div>
+        <div class="field"><label for="jpCat">Ангилал</label><select id="jpCat" required></select></div>
+        <div class="field"><label for="jpType">Ажлын төрөл</label><select id="jpType"><option>Бүтэн цагийн</option><option>Хагас цагийн</option><option>Гэрээт</option></select></div>
+        <div style="display:flex; gap:12px;">
+          <div class="field" style="flex:1;"><label for="jpSalaryMin">Цалин, доод (₮)</label><input id="jpSalaryMin" type="number" placeholder="2000000" required></div>
+          <div class="field" style="flex:1;"><label for="jpSalaryMax">Цалин, дээд (₮)</label><input id="jpSalaryMax" type="number" placeholder="3000000" required></div>
+        </div>
+        <div class="field"><label for="jpSummary">Ажлын тухай товч</label><textarea id="jpSummary" rows="3" placeholder="Энэ ажлын байрны гол зорилго..."></textarea></div>
+        <div class="field"><label for="jpReq">Шаардлага (мөр бүрт нэгийг бичнэ)</label><textarea id="jpReq" rows="3" placeholder="2-с дээш жил туршлага
+Excel сайн мэддэг"></textarea></div>
+        <button type="submit" class="btn btn-solid" style="margin-top:6px;">Ажлын зар нийтлэх</button>
+      </form>
+      <div class="job-detail-side" style="position:static;">
+        <h3 style="margin-bottom:14px;">Яагаад Зам дээр нийтлэх вэ?</h3>
+        <div class="side-row"><span>Идэвхтэй горилогч</span><span id="statActive2">–</span></div>
+        <div class="side-row"><span>Дундаж хариу хугацаа</span><span>3.4 өдөр</span></div>
+        <div class="side-row"><span>Зар нийтлэх төлбөр</span><span>Энэ бол дизайн загвар</span></div>
+        <p style="color:var(--text-muted); font-size:0.86rem; margin-top:16px;">Нийтэлсэн зар шууд "Ажлын байрууд" жагсаалт болон компанийн профайл хуудсанд харагдана.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap footer-row">
+    <button class="logo" style="font-size:1.2rem;" onclick="showView('home')"><span>Зам</span><span class="dash" style="width:18px;"></span></button>
+    <div class="footer-links">
+      <button onclick="showView('home')">Бидний тухай</button>
+      <button onclick="showView('employer')">Байгууллагад зориулсан</button>
+      <button onclick="openLogin()">Холбоо барих</button>
+    </div>
+    <span>© 2026 Зам · хөгжүүлэгч Orgil</span>
+  </div>
+</footer>
+
+<!-- login modal -->
+<div class="overlay" id="loginOverlay" onclick="if(event.target===this) closeLogin()">
+  <div class="modal">
+    <h3>Нэвтрэх</h3>
+    <div class="field"><label>И-мэйл хаяг</label><input type="email" placeholder="tanii@mail.mn"></div>
+    <div class="field"><label>Нууц үг</label><input type="password" placeholder="••••••••"></div>
+    <button class="btn btn-solid" style="width:100%;" onclick="fakeLogin()">Нэвтрэх</button>
+    <p style="margin-top:14px; font-size:0.8rem; color:var(--text-muted); text-align:center;">Энэ бол дизайн загвар — жинхэнэ бүртгэл үүсгэхгүй.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const JOBS = [
+    { id:'fe-dev', title:'Фронтэнд хөгжүүлэгч', company:'Модон Тек ХХК', companyId:'modon-tek', intlFriendly:true, location:'Улаанбаатар, Сүхбаатар дүүрэг', cat:'it', catLabel:'IT / Технологи', type:'Бүтэн цагийн · Алсаас ажиллах боломжтой', salaryMin:2800000, salaryMax:4200000, postedDaysAgo:2, badge:'Шинэ',
+      summary:'Хэрэглэгчийн интерфэйс хөгжүүлэх багт нэгдэж, React дээр суурилсан бүтээгдэхүүн дээр ажиллана.',
+      responsibilities:['Компанийн үндсэн бүтээгдэхүүний интерфэйсийг React дээр хөгжүүлэх','Дизайнерын Figma загварыг код болгон хэрэгжүүлэх','Backend багтай хамтран API холбох'],
+      requirements:['React, JavaScript (ES6+) 1-с дээш жил туршлага','Git ашиглаж чадах','Figma загвар унших чадвартай'],
+      benefits:['Эрүүл мэндийн даатгал','Алсаас ажиллах боломж','Жилд 2 удаа сургалтын дэмжлэг'],
+      skills:['React','JavaScript','Figma'] },
+    { id:'be-dev', title:'Backend хөгжүүлэгч', company:'Эрдэнэ Дата ХХК', companyId:'erdene-data', intlFriendly:true, location:'Улаанбаатар', cat:'it', catLabel:'IT / Технологи', type:'Бүтэн цагийн', salaryMin:3000000, salaryMax:4500000, postedDaysAgo:1, badge:'Онцлох',
+      summary:'Node.js дээр суурилсан үйлчилгээнүүдийг өргөтгөх, өгөгдлийн сангийн гүйцэтгэлийг сайжруулах багт нэгдэнэ.',
+      responsibilities:['Node.js/Express дээр API хөгжүүлэх','PostgreSQL өгөгдлийн сан загварчлах','Ачааллын тестийн үр дүнг сайжруулах'],
+      requirements:['Node.js, PostgreSQL туршлагатай','REST API загварчлалын мэдлэгтэй','Docker ашиглаж чаддаг давуу тал'],
+      benefits:['Уян хатан цагийн хуваарь','Эрүүл мэндийн даатгал','Жилийн урамшуулал'],
+      skills:['Node.js','PostgreSQL','JavaScript'] },
+    { id:'acc', title:'Ахлах нягтлан бодогч', company:'Тэнгэр Финанс ХХК', companyId:'tenger-finance', location:'Улаанбаатар', cat:'finance', catLabel:'Санхүү', type:'Бүтэн цагийн', salaryMin:2200000, salaryMax:3000000, postedDaysAgo:4, badge:'Онцлох',
+      summary:'Компанийн сарын болон улирлын санхүүгийн тайланг хариуцан гүйцэтгэнэ.',
+      responsibilities:['Сарын санхүүгийн тайлан бэлтгэх','Татварын тайлан хугацаанд нь гаргах','Дотоод аудитад бэлтгэх'],
+      requirements:['Нягтлан бодох бүртгэлийн дээд боловсрол','3-с дээш жил туршлага','1С системтэй ажиллаж чадвартай'],
+      benefits:['Эрүүл мэндийн даатгал','Жилийн бонус','Мэргэжил дээшлүүлэх сургалт'],
+      skills:['1С','Санхүүгийн тайлан'] },
+    { id:'econ', title:'Эдийн засагч', company:'Алтан Гүүр Барилга ХХК', companyId:'altan-guur', location:'Улаанбаатар', cat:'finance', catLabel:'Санхүү', type:'Бүтэн цагийн', salaryMin:2100000, salaryMax:2900000, postedDaysAgo:6, badge:'Шинэ',
+      summary:'Барилгын төслүүдийн эдийн засгийн үнэлгээ, зардлын тооцоог хариуцна.',
+      responsibilities:['Төслийн зардлын тооцоо гаргах','Эдийн засгийн үр ашгийн шинжилгээ хийх','Төсвийн хяналт хийх'],
+      requirements:['Эдийн засгийн боловсрол','Excel-д маш сайн ажилладаг','2-с дээш жил туршлага'],
+      benefits:['Тээврийн зардал','Эрүүл мэндийн даатгал'],
+      skills:['Excel','Төсөв'] },
+    { id:'mkt', title:'Маркетингийн менежер', company:'Ногоон Ирээдүй ХХК', companyId:'nogoon-ireedui', intlFriendly:true, location:'Улаанбаатар', cat:'marketing', catLabel:'Маркетинг', type:'Бүтэн цагийн', salaryMin:2500000, salaryMax:3500000, postedDaysAgo:1, badge:'Яаралтай',
+      summary:'Брэндийн digital кампанит ажлыг төлөвлөж, багийг удирдана.',
+      responsibilities:['Улирлын маркетингийн төлөвлөгөө боловсруулах','Сошиал медиа кампанит ажлыг удирдах','Гүйцэтгэлийн тайлан гаргах'],
+      requirements:['Маркетингийн чиглэлээр 3-с дээш жил туршлага','Багийн удирдлагын туршлагатай','Meta/Google Ads туршлагатай'],
+      benefits:['Уян хатан цагийн хуваарь','Жилийн урамшуулал'],
+      skills:['Digital маркетинг','Багийн удирдлага'] },
+    { id:'log', title:'Ложистикийн мэргэжилтэн', company:'Смарт Ложистик ХХК', companyId:'smart-logistics', location:'Улаанбаатар', cat:'logistics', catLabel:'Ложистик', type:'Бүтэн цагийн', salaryMin:1900000, salaryMax:2600000, postedDaysAgo:3, badge:'Шинэ',
+      summary:'Агуулахын нөөц, тээвэрлэлтийн хуваарийг зохицуулна.',
+      responsibilities:['Агуулахын нөөцийг хянах','Тээврийн хуваарь зохицуулах','Нийлүүлэгчидтэй харилцах'],
+      requirements:['Ложистик эсвэл холбогдох чиглэлийн боловсрол','1-с дээш жил туршлага'],
+      benefits:['Хоолны хөнгөлөлт','Эрүүл мэндийн даатгал'],
+      skills:['Агуулахын менежмент'] },
+    { id:'civ', title:'Барилгын инженер', company:'Алтан Гүүр Барилга ХХК', companyId:'altan-guur', location:'Улаанбаатар', cat:'construction', catLabel:'Барилга', type:'Бүтэн цагийн', salaryMin:2400000, salaryMax:3300000, postedDaysAgo:5, badge:'Шинэ',
+      summary:'Барилгын талбай дээр чанар, аюулгүй байдлыг хариуцна.',
+      responsibilities:['Барилгын ажлын явцыг хянах','Чанарын шаардлага биелэлтийг шалгах','Тайлан бэлтгэх'],
+      requirements:['Барилгын инженерийн боловсрол','AutoCAD ашиглаж чаддаг'],
+      benefits:['Талбайн нэмэгдэл','Эрүүл мэндийн даатгал'],
+      skills:['AutoCAD','Чанарын хяналт'] },
+    { id:'edu', title:'Сургалтын менежер', company:'Тэргүүн Боловсрол ХХК', companyId:'tergun-edu', location:'Улаанбаатар', cat:'education', catLabel:'Боловсрол', type:'Бүтэн цагийн', salaryMin:2000000, salaryMax:2700000, postedDaysAgo:2, badge:'Онцлох',
+      summary:'Сургалтын хөтөлбөр төлөвлөж, багшийн багийг зохицуулна.',
+      responsibilities:['Сургалтын хөтөлбөр боловсруулах','Багшийн багийг зохион байгуулах','Сурагчдын үр дүнг тайлагнах'],
+      requirements:['Багшийн эсвэл боловсролын удирдлагын туршлагатай','2-с дээш жил туршлага'],
+      benefits:['Сургалтын хөнгөлөлт','Эрүүл мэндийн даатгал'],
+      skills:['Хөтөлбөр боловсруулалт'] },
+    { id:'ux-design', title:'UX/UI дизайнер', company:'Айдиа Студи ХХК', companyId:'aidea-studio', intlFriendly:true, location:'Улаанбаатар', cat:'it', catLabel:'IT / Технологи', type:'Бүтэн цагийн · Гибрид', salaryMin:2600000, salaryMax:3800000, postedDaysAgo:1, badge:'Шинэ',
+      summary:'Гар утасны болон веб бүтээгдэхүүний хэрэглэгчийн туршлагыг судалж, интерфэйс загварчилна.',
+      responsibilities:['Хэрэглэгчийн судалгаа хийх','Figma дээр interactive прототип бэлдэх','Хөгжүүлэгчидтэй хамтран дизайныг хэрэгжүүлэх'],
+      requirements:['Figma, Adobe XD ашиглаж чаддаг','Портфолио бэлэн байх','1.5-с дээш жил туршлага'],
+      benefits:['Гибрид ажиллах боломж','Дизайны хэрэгслийн лиценз компаниас','Мэргэжлийн сургалт'],
+      skills:['Figma','UX судалгаа'] },
+    { id:'data-analyst', title:'Дата аналист', company:'Эрдэнэ Дата ХХК', companyId:'erdene-data', intlFriendly:true, location:'Улаанбаатар', cat:'it', catLabel:'IT / Технологи', type:'Бүтэн цагийн', salaryMin:2700000, salaryMax:3900000, postedDaysAgo:3, badge:'Онцлох',
+      summary:'Бизнесийн шийдвэр гаргалтад дэмжлэг үзүүлэх өгөгдлийн дашбоард, тайлан бэлтгэнэ.',
+      responsibilities:['SQL query бичих, тайлан гаргах','Dashboard бүтээх (Power BI/Looker)','Багийн шийдвэрт өгөгдлөөр дэмжлэг үзүүлэх'],
+      requirements:['SQL сайн мэддэг','Excel/Power BI туршлагатай','Статистикийн үндсэн ойлголттой'],
+      benefits:['Эрүүл мэндийн даатгал','Уян хатан цагийн хуваарь'],
+      skills:['SQL','Power BI'] },
+    { id:'legal-counsel', title:'Хуулийн зөвлөх', company:'Жастис Партнерс ХХК', companyId:'justice-partners', location:'Улаанбаатар', cat:'legal', catLabel:'Хууль', type:'Бүтэн цагийн', salaryMin:2800000, salaryMax:4000000, postedDaysAgo:4, badge:'Онцлох',
+      summary:'Байгууллагын гэрээ, хуулийн эрсдэлийн үнэлгээг хариуцна.',
+      responsibilities:['Гэрээ боловсруулах, хянах','Хуулийн эрсдэлийн үнэлгээ хийх','Маргаан таслах ажиллагаанд оролцох'],
+      requirements:['Хуулийн дээд боловсрол','Өмгөөлөгчийн эрхтэй бол давуу тал','3-с дээш жил туршлага'],
+      benefits:['Эрүүл мэндийн даатгал','Жилийн бонус'],
+      skills:['Гэрээний эрх зүй'] },
+    { id:'nurse', title:'Сувилагч', company:'Энэрэл Эмнэлэг ХХК', companyId:'enerel-clinic', location:'Улаанбаатар', cat:'health', catLabel:'Эрүүл мэнд', type:'Бүтэн цагийн · Ээлжийн ажил', salaryMin:1800000, salaryMax:2400000, postedDaysAgo:2, badge:'Яаралтай',
+      summary:'Өвчтөний асаргаа, эмчийн заавраар эмчилгээ хийх багт нэгдэнэ.',
+      responsibilities:['Өвчтөний үзүүлэлт хянах','Эмчийн зааврын дагуу эмчилгээ хийх','Бичиг баримт хөтлөх'],
+      requirements:['Сувилахуйн мэргэжлийн диплом','Ажлын зөвшөөрөл (лиценз)'],
+      benefits:['Ээлжийн нэмэгдэл','Эрүүл мэндийн даатгал'],
+      skills:['Асаргаа'] },
+    { id:'hr-manager', title:'Хүний нөөцийн менежер', company:'Пиплс Партнер ХХК', companyId:'peoples-partner', location:'Улаанбаатар', cat:'hr', catLabel:'Хүний нөөц', type:'Бүтэн цагийн', salaryMin:2300000, salaryMax:3200000, postedDaysAgo:5, badge:'Шинэ',
+      summary:'Байгууллагуудад ажилтан сонгон шалгаруулах, дадлагажуулах үйлчилгээ үзүүлнэ.',
+      responsibilities:['Захиалагч байгууллагын ажлын байрны шаардлага тодорхойлох','Горилогчидтой ярилцлага хийх','Дадлагажуулах хөтөлбөр зохион байгуулах'],
+      requirements:['Хүний нөөцийн чиглэлээр 2-с дээш жил туршлага','Харилцааны сайн ур чадвартай'],
+      benefits:['Уян хатан цагийн хуваарь','Гүйцэтгэлийн урамшуулал'],
+      skills:['Сонгон шалгаруулалт'] },
+    { id:'content-manager', title:'Контент менежер', company:'Ногоон Ирээдүй ХХК', companyId:'nogoon-ireedui', intlFriendly:true, location:'Улаанбаатар', cat:'marketing', catLabel:'Маркетинг', type:'Бүтэн цагийн', salaryMin:2000000, salaryMax:2800000, postedDaysAgo:2, badge:'Шинэ',
+      summary:'Брэндийн сошиал медиа, блог контентыг төлөвлөж, бүтээнэ.',
+      responsibilities:['Сарын контент төлөвлөгөө гаргах','Зураг, видео контент захиалах, хянах','Гүйцэтгэлийн үзүүлэлт тайлагнах'],
+      requirements:['Контент бүтээх туршлагатай','Canva/Adobe ашиглаж чаддаг'],
+      benefits:['Гибрид ажиллах боломж','Мэргэжил дээшлүүлэх дэмжлэг'],
+      skills:['Контент төлөвлөлт'] },
+    { id:'proj-mgr', title:'Төслийн менежер', company:'Алтан Гүүр Барилга ХХК', companyId:'altan-guur', location:'Улаанбаатар', cat:'construction', catLabel:'Барилга', type:'Бүтэн цагийн', salaryMin:3200000, salaryMax:4600000, postedDaysAgo:1, badge:'Онцлох',
+      summary:'Барилгын төслийн хугацаа, төсөв, чанарыг нэгдсэн байдлаар удирдана.',
+      responsibilities:['Төслийн хуваарь, төсөв удирдах','Гүйцэтгэгч, туслан гүйцэтгэгчтэй зохицуулах','Захиалагчид тайлагнах'],
+      requirements:['Барилгын чиглэлээр 4-с дээш жил туршлага','Төслийн удирдлагын гэрчилгээтэй бол давуу тал'],
+      benefits:['Тээврийн зардал','Жилийн бонус'],
+      skills:['Төслийн удирдлага'] }
+  ];
+
+  const COMPANIES = [
+    { id:'modon-tek', name:'Модон Тек ХХК', industry:'Программ хангамж хөгжүүлэлт', founded:2019, size:'25-50 ажилтан', location:'Улаанбаатар, Сүхбаатар дүүрэг',
+      about:'Монголын дунд, жижиг бизнесүүдэд зориулсан веб, мобайл шийдэл хөгжүүлдэг компани.',
+      advantages:['Алсаас/гибридээр ажиллах бүрэн боломжтой','Жилд 2 удаа гадаад сургалт, конференцид явуулдаг','Код бичихээс гадна бүтээгдэхүүний шийдвэрт санал өгөх боломжтой'] },
+    { id:'erdene-data', name:'Эрдэнэ Дата ХХК', industry:'Дата инженерчлэл, IT үйлчилгээ', founded:2021, size:'10-25 ажилтан', location:'Улаанбаатар',
+      about:'Байгууллагуудад зориулсан өгөгдлийн сан, backend системийн шийдэл гаргадаг стартап.',
+      advantages:['Стартап хэмжээний багт шууд нөлөө үзүүлэх боломж','Орчин үеийн технологийн стектэй ажилладаг','Гүйцэтгэлийн урамшуулал байдаг'] },
+    { id:'tenger-finance', name:'Тэнгэр Финанс ХХК', industry:'Санхүү, зээлийн үйлчилгээ', founded:2015, size:'50-100 ажилтан', location:'Улаанбаатар',
+      about:'Жижиг, дунд бизнест зориулсан санхүүгийн үйлчилгээ үзүүлдэг байгууллага.',
+      advantages:['Тогтвортой, урт хугацааны ажлын байр','Мэргэжлийн сертификатын зардлыг компани хариуцдаг','Жилийн тогтмол бонусын систем'] },
+    { id:'altan-guur', name:'Алтан Гүүр Барилга ХХК', industry:'Барилга, дэд бүтэц', founded:2008, size:'100-250 ажилтан', location:'Улаанбаатар',
+      about:'Орон сууц, арилжааны барилгын томоохон төслүүдийг гүйцэтгэдэг барилгын компани.',
+      advantages:['Том хэмжээний, нэр хүндтэй төслүүд дээр ажиллах туршлага','Талбайн болон удирдлагын албан тушаалд дэвших боломж','Тээврийн болон талбайн нэмэгдэл'] },
+    { id:'nogoon-ireedui', name:'Ногоон Ирээдүй ХХК', industry:'Хэрэглээний бараа, маркетинг', founded:2017, size:'25-50 ажилтан', location:'Улаанбаатар',
+      about:'Байгаль орчинд ээлтэй бүтээгдэхүүн үйлдвэрлэдэг, брэндингдээ идэвхтэй компани.',
+      advantages:['Бүтээлч, залуу баг','Кампанит ажлын үр дүнд суурилсан урамшуулал','Гадаад маркетингийн сургалтад хамрагддаг'] },
+    { id:'smart-logistics', name:'Смарт Ложистик ХХК', industry:'Ложистик, тээвэр', founded:2012, size:'50-100 ажилтан', location:'Улаанбаатар',
+      about:'Дотоод, гадаад тээвэр, агуулахын менежментийн үйлчилгээ үзүүлдэг.',
+      advantages:['Хоолны хөнгөлөлт','Тогтмол цагийн хуваарь','Ажлын байран дахь дэвших тодорхой шат байдаг'] },
+    { id:'tergun-edu', name:'Тэргүүн Боловсрол ХХК', industry:'Боловсрол, сургалт', founded:2014, size:'25-50 ажилтан', location:'Улаанбаатар',
+      about:'Хувийн сургууль, курсын сүлжээ ажиллуулдаг боловсролын байгууллага.',
+      advantages:['Сургалтын хөнгөлөлт (ажилтны хүүхдэд)','Зуны амралт урт','Багшлах арга зүйн тогтмол сургалт'] },
+    { id:'aidea-studio', name:'Айдиа Студи ХХК', industry:'Дизайн, брэндинг студи', founded:2020, size:'10-25 ажилтан', location:'Улаанбаатар',
+      about:'Гадаад, дотоодын брэндүүдэд зориулж дижитал бүтээгдэхүүний дизайн хийдэг студи.',
+      advantages:['Олон улсын харилцагчтай төслүүд дээр ажиллах','Дизайны хэрэгслийн бүрэн лиценз','Портфолио бэлдэхэд дэмжлэг үзүүлдэг'] },
+    { id:'justice-partners', name:'Жастис Партнерс ХХК', industry:'Хуулийн зөвлөх үйлчилгээ', founded:2011, size:'10-25 ажилтан', location:'Улаанбаатар',
+      about:'Байгууллагын эрх зүйн зөвлөх үйлчилгээ үзүүлдэг хуулийн фирм.',
+      advantages:['Олон төрлийн салбарын кейс дээр ажиллах туршлага','Мэргэжлийн хөгжлийн төлбөрийг компани хариуцдаг'] },
+    { id:'enerel-clinic', name:'Энэрэл Эмнэлэг ХХК', industry:'Эрүүл мэндийн үйлчилгээ', founded:2016, size:'50-100 ажилтан', location:'Улаанбаатар',
+      about:'Гэр бүлийн болон мэргэшсэн эмнэлгийн үйлчилгээ үзүүлдэг хувийн эмнэлэг.',
+      advantages:['Ажилтанд зориулсан үнэгүй эмнэлгийн үзлэг','Ээлжийн ажлын тогтмол хуваарьтай','Мэргэшлийн зэрэг горилоход дэмжлэг үзүүлдэг'] },
+    { id:'peoples-partner', name:'Пиплс Партнер ХХК', industry:'Хүний нөөцийн зөвлөх үйлчилгээ', founded:2018, size:'10-25 ажилтан', location:'Улаанбаатар',
+      about:'Байгууллагуудад ажилтан сонгон шалгаруулах, HR стратегийн зөвлөх үйлчилгээ үзүүлдэг.',
+      advantages:['HR салбарын өргөн сүлжээтэй танилцах боломж','Уян хатан цагийн хуваарь','Гүйцэтгэлд суурилсан урамшуулал'] }
+  ];
+
+  const RECOMMENDED = [
+    {jobId:'fe-dev', reasons:['React ур чадвар шууд тохирсон','JavaScript-ийн туршлага давхцаж байна']},
+    {jobId:'be-dev', reasons:['Node.js ур чадвар тохирсон','IT салбарын дундаж цалингаас өндөр санал']}
+  ];
+
+  let APPLICATIONS = [
+    { jobId:'mkt', stage:2, updated:'2026-08-21', note:'Ярилцлагад урьсан имэйл ирсэн.' }
+  ];
+  const STAGES = ['Илгээсэн','Үзсэн','Ярилцлагад урьсан','Шийдвэр гарсан'];
+
+  let currentCvTheme = 'gold';
+  const THEME_HEX = {gold:'#9A6B1B', sage:'#3F6B4A', red:'#AE3B2C'};
+
+  function fmt(n){ return n.toLocaleString('mn-MN'); }
+
+  function catLabelMap(){ const m={}; JOBS.forEach(j=> m[j.cat]=j.catLabel); return m; }
+
+  function jobCardHTML(job){
+    return `<div class="job-card" data-cat="${job.cat}" data-title="${(job.title+' '+job.company).toLowerCase()}" tabindex="0" role="button" onclick="showJobDetail('${job.id}')" onkeydown="if(event.key==='Enter') showJobDetail('${job.id}')">
+      <div class="job-top">
+        <div><div class="job-title">${job.title}</div><button class="job-company" onclick="event.stopPropagation(); showCompanyProfile('${job.companyId}')">${job.company} · ${job.location}</button></div>
+        <span class="job-badge">${job.badge}</span>
+      </div>
+      ${job.intlFriendly ? '<span class="intl-pill">🌍 Гадаад дипломтой тохиромжтой</span>' : ''}
+      <div class="job-meta"><span>${job.type}</span><span>${job.postedDaysAgo} хоногийн өмнө нийтлэгдсэн</span></div>
+      <div class="job-bottom"><span class="job-salary">${fmt(job.salaryMin)}₮ – ${fmt(job.salaryMax)}₮</span><span class="job-more">Дэлгэрэнгүй →</span></div>
+    </div>`;
+  }
+
+  function renderJobGrid(filter='all'){
+    const grid = document.getElementById('jobGrid');
+    grid.innerHTML = JOBS.filter(j=> filter==='all' || j.cat===filter).map(jobCardHTML).join('');
+    document.getElementById('statActive').textContent = JOBS.length;
+    const s2 = document.getElementById('statActive2');
+    if(s2) s2.textContent = JOBS.length;
+  }
+
+  function renderChips(){
+    const cats = ['all', ...new Set(JOBS.map(j=>j.cat))];
+    const labels = {all:'Бүгд'};
+    JOBS.forEach(j=> labels[j.cat]=j.catLabel);
+    const chipsEl = document.getElementById('chips');
+    chipsEl.innerHTML = cats.map((c,i)=>`<button class="chip ${i===0?'active':''}" data-cat="${c}">${labels[c]}</button>`).join('');
+    chipsEl.querySelectorAll('.chip').forEach(chip=>{
+      chip.addEventListener('click', ()=>{
+        chipsEl.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+        chip.classList.add('active');
+        renderJobGrid(chip.dataset.cat);
+      });
+    });
+  }
+
+  function renderCategories(){
+    const cats = {};
+    JOBS.forEach(j=>{ cats[j.cat] = cats[j.cat] || {label:j.catLabel, count:0}; cats[j.cat].count++; });
+    const grid = document.getElementById('catGrid');
+    grid.innerHTML = Object.entries(cats).map(([key,v],i)=>`
+      <button class="cat-card" onclick="filterFromCategory('${key}')">
+        <div class="n">0${i+1}</div>
+        <h4>${v.label}</h4>
+        <div class="cnt">${v.count} ажлын байр</div>
+      </button>`).join('');
+  }
+
+  function filterFromCategory(cat){
+    document.querySelectorAll('#chips .chip').forEach(c=>{
+      c.classList.toggle('active', c.dataset.cat===cat);
+    });
+    renderJobGrid(cat);
+    showView('home','#jobs');
+  }
+
+  const DEMAND = [
+    {cat:'it', trend:'up', note:'Идэвхтэй ажлын байр хамгийн олон — хамгийн эрэлттэй салбар.'},
+    {cat:'construction', trend:'up', note:'Том төслүүд нэмэгдэхийн хэрээр эрэлт өсч байна.'},
+    {cat:'health', trend:'up', note:'Ээлжийн ажилтны хэрэгцээ тогтмол өндөр.'},
+    {cat:'finance', trend:'stable', note:'Туршлагатай мэргэжилтнүүдэд тогтвортой эрэлттэй.'},
+    {cat:'legal', trend:'stable', note:'Байгууллагын гэрээний ачаалал нэмэгдэхэд эрэлт өснө.'},
+    {cat:'logistics', trend:'stable', note:'Улирлын дагуу бага зэрэг хэлбэлздэг.'},
+    {cat:'hr', trend:'stable', note:'Байгууллагууд өргөжихийн хэрээр эрэлт нэмэгддэг.'},
+    {cat:'marketing', trend:'down', note:'Сүүлийн саруудад цөөн зар нийтлэгдсэн.'},
+    {cat:'education', trend:'stable', note:'Байнгын, тогтвортой эрэлттэй салбар.'}
+  ];
+
+  function renderDemand(){
+    const labels = catLabelMap();
+    const counts = {};
+    JOBS.forEach(j=>{ counts[j.cat] = (counts[j.cat]||0)+1; });
+    const maxCount = Math.max(...Object.values(counts));
+    const rows = DEMAND.filter(d=>counts[d.cat]).sort((a,b)=> counts[b.cat]-counts[a.cat]);
+    const arrow = {up:'↑', stable:'→', down:'↓'};
+    document.getElementById('demandList').innerHTML = rows.map(d=>{
+      const c = counts[d.cat] || 0;
+      const pct = Math.round((c/maxCount)*100);
+      return `<button class="demand-row" onclick="filterFromCategory('${d.cat}')" title="${d.note}">
+        <span>${labels[d.cat]}</span>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+        <span class="trend ${d.trend}">${arrow[d.trend]}</span>
+        <span class="demand-val">${c} зар</span>
+      </button>`;
+    }).join('');
+  }
+
+  function renderIntlJobs(){
+    const grid = document.getElementById('intlJobGrid');
+    if(!grid) return;
+    grid.innerHTML = JOBS.filter(j=>j.intlFriendly).map(jobCardHTML).join('');
+  }
+
+  function showCompanyProfile(id){
+    const co = COMPANIES.find(c=>c.id===id);
+    if(!co) return;
+    const openings = JOBS.filter(j=>j.companyId===id);
+    document.getElementById('companyContent').innerHTML = `
+      <div class="company-header">
+        <div class="company-logo">${co.name.charAt(0)}</div>
+        <div>
+          <h1>${co.name}</h1>
+          <div class="jd-meta"><span>${co.industry}</span><span>${co.location}</span><span>${co.size}</span><span>${co.founded} оноос хойш</span></div>
+        </div>
+      </div>
+      <div class="company-layout">
+        <div class="job-detail-main">
+          <div class="jd-block" style="margin-top:0;"><h3>Компанийн тухай</h3><p style="color:var(--text-muted); font-size:0.95rem;">${co.about}</p></div>
+          <div class="jd-block"><h3>Давуу тал</h3><ul>${co.advantages.map(a=>`<li>${a}</li>`).join('')}</ul></div>
+        </div>
+        <div class="job-detail-side">
+          <div class="side-salary" style="font-size:1.1rem;">${openings.length} идэвхтэй зар</div>
+          <div class="side-row"><span>Салбар</span><span>${co.industry}</span></div>
+          <div class="side-row"><span>Хэмжээ</span><span>${co.size}</span></div>
+          <div class="side-row"><span>Байршил</span><span>${co.location}</span></div>
+        </div>
+      </div>
+      <div class="jd-block">
+        <h3>${co.name}-ийн идэвхтэй ажлын байрууд</h3>
+        <div class="job-grid" style="margin-top:16px;">${openings.length ? openings.map(jobCardHTML).join('') : '<div class="empty-state"><h3>Одоогоор идэвхтэй зар алга</h3></div>'}</div>
+      </div>`;
+    showView('company');
+  }
+
+  function renderRecommended(){
+    const grid = document.getElementById('recGrid');
+    grid.innerHTML = RECOMMENDED.map(r=>{
+      const job = JOBS.find(j=>j.id===r.jobId);
+      return `<button class="rec-card" onclick="showJobDetail('${job.id}')">
+        <div class="job-top"><div><div class="job-title">${job.title}</div><div class="job-company">${job.company}</div></div><span class="job-badge">${fmt(job.salaryMin)}–${fmt(job.salaryMax)}₮</span></div>
+        <div class="rec-reasons">${r.reasons.map(rs=>`<span class="rec-reason">✓ ${rs}</span>`).join('')}</div>
+      </button>`;
+    }).join('');
+  }
+
+  function showJobDetail(id){
+    const job = JOBS.find(j=>j.id===id);
+    if(!job) return;
+    const applied = APPLICATIONS.find(a=>a.jobId===id);
+    document.getElementById('jobDetailContent').innerHTML = `
+      <div class="job-detail-main">
+        <span class="job-badge">${job.catLabel}</span>
+        <h1 style="margin-top:14px;">${job.title}</h1>
+        <div class="jd-meta"><button class="jd-company-link" onclick="showCompanyProfile('${job.companyId}')">${job.company}</button><span>${job.location}</span><span>${job.type}</span></div>
+        <span class="jd-fresh">${job.postedDaysAgo} хоногийн өмнө, идэвхтэй байгууллагаас нийтлэгдсэн</span>
+        ${job.intlFriendly ? '<span class="intl-pill" style="margin-top:12px; display:inline-block;">🌍 Гадаад дипломтой тохиромжтой</span>' : ''}
+        <div class="jd-block"><h3>Ажлын тухай</h3><p style="color:var(--text-muted); font-size:0.95rem;">${job.summary}</p></div>
+        <div class="jd-block"><h3>Гүйцэтгэх үүрэг</h3><ul>${job.responsibilities.map(r=>`<li>${r}</li>`).join('')}</ul></div>
+        <div class="jd-block"><h3>Шаардлага</h3><ul>${job.requirements.map(r=>`<li>${r}</li>`).join('')}</ul></div>
+        <div class="jd-block"><h3>Урамшуулал</h3><ul>${job.benefits.map(r=>`<li>${r}</li>`).join('')}</ul></div>
+      </div>
+      <div class="job-detail-side">
+        <div class="side-salary">${fmt(job.salaryMin)}₮ – ${fmt(job.salaryMax)}₮</div>
+        <div class="side-row"><span>Ажлын төрөл</span><span>${job.type.split(' · ')[0]}</span></div>
+        <div class="side-row"><span>Байршил</span><span>${job.location}</span></div>
+        <div class="side-row"><span>Нийтэлсэн</span><span>${job.postedDaysAgo} хоногийн өмнө</span></div>
+        <button class="btn btn-solid" style="width:100%; margin-top:20px;" id="applyBtn" onclick="applyToJob('${job.id}')" ${applied?'disabled':''}>${applied? 'Илгээгдсэн ✓' : 'Нэг товчоор илгээх'}</button>
+        <div class="apply-status">${applied? 'Миний зам цэснээс явцыг хараарай.' : 'CV-гээ өмнө нь бэлдсэн бол дахин бөглөх шаардлагагүй.'}</div>
+        <button class="btn" style="width:100%; margin-top:10px;" onclick="showCompanyProfile('${job.companyId}')">Компанийн профайл харах →</button>
+      </div>`;
+    showView('job');
+  }
+
+  function applyToJob(id){
+    if(!APPLICATIONS.find(a=>a.jobId===id)){
+      APPLICATIONS.push({jobId:id, stage:0, updated: new Date().toISOString().slice(0,10), note:'CV илгээгдсэн, ажил олгогчийн хариуг хүлээж байна.'});
+    }
+    showJobDetail(id);
+    showToast('Илгээгдлээ ✓ — Миний зам цэснээс явцыг хараарай');
+  }
+
+  function renderTracker(){
+    const list = document.getElementById('trackerList');
+    if(APPLICATIONS.length===0){
+      list.innerHTML = `<div class="empty-state"><h3>Одоогоор илгээсэн CV алга</h3><p>Ажлын байр сонгоод "Нэг товчоор илгээх" дарахад энд харагдана.</p></div>`;
+      return;
+    }
+    list.innerHTML = APPLICATIONS.map(a=>{
+      const job = JOBS.find(j=>j.id===a.jobId);
+      return `<div class="track-card">
+        <div class="track-top">
+          <div><div class="job-title">${job.title}</div><div class="job-company">${job.company}</div></div>
+          <span class="job-salary">${fmt(job.salaryMin)}₮ – ${fmt(job.salaryMax)}₮</span>
+        </div>
+        <div class="track-stages">
+          ${STAGES.map((s,i)=>`<div class="track-stage ${i<=a.stage?'done':''}"><div class="dot"></div><div class="lbl">${s}</div></div>`).join('')}
+        </div>
+        <div class="track-updated">Сүүлд шинэчлэгдсэн: ${a.updated} — ${a.note}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function showView(name, hash){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('view-'+name).classList.add('active');
+    if(name==='tracker') renderTracker();
+    window.scrollTo({top:0, behavior:'auto'});
+    if(hash){ setTimeout(()=>{ const el=document.querySelector(hash); if(el) el.scrollIntoView({behavior:'smooth'}); }, 30); }
+  }
+
+  function runSearch(){
+    const q = document.getElementById('heroSearch').value.trim().toLowerCase();
+    showView('home','#jobs');
+    if(!q){ renderJobGrid('all'); document.querySelectorAll('#chips .chip').forEach((c,i)=>c.classList.toggle('active', i===0)); return; }
+    document.querySelectorAll('#chips .chip').forEach((c,i)=>c.classList.toggle('active', i===0));
+    const grid = document.getElementById('jobGrid');
+    grid.innerHTML = JOBS.filter(j=> (j.title+' '+j.company+' '+j.catLabel).toLowerCase().includes(q)).map(jobCardHTML).join('');
+    if(grid.innerHTML.trim()===''){ grid.innerHTML = `<div class="empty-state"><h3>Илэрц олдсонгүй</h3><p>Өөр түлхүүр үгээр хайж үзээрэй.</p></div>`; }
+  }
+  document.getElementById('heroSearch').addEventListener('keydown', e=>{ if(e.key==='Enter') runSearch(); });
+
+  function openLogin(){ document.getElementById('loginOverlay').classList.add('show'); }
+  function closeLogin(){ document.getElementById('loginOverlay').classList.remove('show'); }
+  function fakeLogin(){ closeLogin(); showToast('Энэ бол дизайн загвар — жинхэнэ нэвтрэлт хийгдээгүй'); }
+
+  function showToast(msg){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(()=> t.classList.remove('show'), 3200);
+  }
+
+  function setCvTheme(theme, el){
+    currentCvTheme = theme;
+    document.querySelectorAll('.theme-swatch').forEach(s=>s.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('cvPreviewCard').style.borderTopColor = THEME_HEX[theme];
+  }
+
+  document.getElementById('cvForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('cvName').value || 'Овог нэр';
+    const role = document.getElementById('cvRole').value || 'Зорьж буй мэргэжил';
+    const summary = document.getElementById('cvSummary').value || 'Танилцуулга энд харагдана.';
+    const education = document.getElementById('cvEducation').value;
+    const lang = document.getElementById('cvLang').value;
+    const skills = document.getElementById('cvSkills').value.split(',').map(s=>s.trim()).filter(Boolean);
+    document.getElementById('pvName').textContent = name;
+    document.getElementById('pvRole').textContent = role;
+    document.getElementById('pvSummary').textContent = summary;
+    document.getElementById('pvEducation').textContent = education ? '🎓 '+education : '';
+    document.getElementById('pvLang').textContent = lang ? '🗣 '+lang : '';
+    document.getElementById('pvSkills').innerHTML = skills.map(s=>`<span class="rec-reason">${s}</span>`).join('');
+    if(skills.length){
+      document.getElementById('fbKeywords').textContent = `Таны бичсэн (${skills.join(', ')}) ур чадварууд ажлын зарын шаардлагатай нийцэж байгаа эсэхийг ангилал бүрээр шалгаж, тохирохгүй байгаа зарыг тодруулах болно.`;
+    }
+    if(lang){
+      document.getElementById('fbLang').textContent = `"${lang}" гэж бичсэн байна — олон улсын байгууллагад CV илгээх бол CEFR (A1–C2) түвшингээр тодотгож өгвэл илүү мэргэжлийн харагдана.`;
+    }
+    document.getElementById('cvFeedback').classList.add('show');
+    showToast('CV хадгалагдлаа — дэлгэрэнгүй зөвлөмжийг доор үзнэ үү');
+  });
+
+  function populateEmployerForm(){
+    const compSel = document.getElementById('jpCompany');
+    compSel.innerHTML = COMPANIES.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+    const catSel = document.getElementById('jpCat');
+    const labels = catLabelMap();
+    catSel.innerHTML = Object.entries(labels).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+    document.getElementById('statActive2').textContent = JOBS.length;
+  }
+
+  document.getElementById('jobPostForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const companyId = document.getElementById('jpCompany').value;
+    const co = COMPANIES.find(c=>c.id===companyId);
+    const cat = document.getElementById('jpCat').value;
+    const labels = catLabelMap();
+    const title = document.getElementById('jpTitle').value.trim() || 'Шинэ ажлын байр';
+    const type = document.getElementById('jpType').value;
+    const salaryMin = parseInt(document.getElementById('jpSalaryMin').value)||0;
+    const salaryMax = parseInt(document.getElementById('jpSalaryMax').value)||salaryMin;
+    const summary = document.getElementById('jpSummary').value.trim() || 'Дэлгэрэнгүй мэдээллийг ярилцлагын үеэр лавлана уу.';
+    const reqLines = document.getElementById('jpReq').value.split('\n').map(s=>s.trim()).filter(Boolean);
+    const newJob = {
+      id:'job-'+Date.now(), title, company:co.name, companyId:co.id, location:co.location, cat, catLabel:labels[cat]||cat,
+      type, salaryMin, salaryMax, postedDaysAgo:0, badge:'Шинэ',
+      summary, responsibilities:['Дэлгэрэнгүй үүрэг ярилцлагын үеэр тодруулагдана.'],
+      requirements: reqLines.length ? reqLines : ['Тодорхой шаардлага одоогоор нэмэгдээгүй байна.'],
+      benefits:['Дэлгэрэнгүйг ярилцлагаас лавлана уу.'], skills:[]
+    };
+    JOBS.unshift(newJob);
+    renderChips(); renderJobGrid('all'); renderCategories(); renderDemand(); renderIntlJobs();
+    this.reset();
+    populateEmployerForm();
+    showToast('Ажлын зар нийтлэгдлээ ✓');
+    showJobDetail(newJob.id);
+  });
+
+  // reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  }, {threshold:0.12});
+  document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
+
+  // init
+  renderChips();
+  renderJobGrid('all');
+  renderCategories();
+  renderRecommended();
+  renderDemand();
+  renderIntlJobs();
+  populateEmployerForm();
+</script>
+
+</body>
+</html>
