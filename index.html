@@ -66,6 +66,9 @@
   .search-box input{flex:1; min-width:200px; background:transparent; border:none; color:var(--text); font-family:var(--font-body); font-size:1rem; padding:14px 16px; outline:none;}
   .search-box input::placeholder{color:var(--text-muted);}
   .hero-stats{display:flex; gap:40px; margin-top:52px; flex-wrap:wrap;}
+  .hero-quicklinks{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap;}
+  .quick-chip{font-size:0.84rem; padding:8px 16px; border-radius:999px; border:1px solid var(--border); background:var(--surface); color:var(--text-muted); transition:all .2s; box-shadow:var(--shadow-sm);}
+  .quick-chip:hover{border-color:var(--gold); color:var(--gold); transform:translateY(-1px);}
   .hero-stats .stat b{font-family:var(--font-mono); font-size:1.7rem; color:var(--gold); display:block;}
   .hero-stats .stat span{color:var(--text-muted); font-size:0.86rem;}
 
@@ -106,9 +109,14 @@
   .job-toolbar{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px;}
   .chip{font-size:0.86rem; padding:9px 18px; border-radius:999px; border:1px solid var(--border); background:var(--surface); color:var(--text-muted); transition:all .2s;}
   .chip.active, .chip:hover{border-color:var(--gold); color:var(--gold);}
+  .filter-panel{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:20px; margin:0 0 24px; box-shadow:var(--shadow-sm);}
+  .filter-row{display:grid; grid-template-columns:repeat(3,1fr) auto; gap:14px; align-items:end;}
+  @media (max-width:680px){ .filter-row{grid-template-columns:1fr;} }
   .job-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:18px;}
   .job-card{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:24px; display:flex; flex-direction:column; gap:14px; transition:border-color .2s, transform .2s, box-shadow .2s; text-align:left; width:100%; box-shadow:var(--shadow-sm);}
   .job-card:hover{border-color:var(--gold); transform:translateY(-3px); box-shadow:var(--shadow-md);}
+  .job-card-featured{border-color:var(--gold); background:linear-gradient(180deg, var(--gold-soft), var(--surface) 60%);}
+  .job-card-featured .job-badge{background:var(--gold); color:#FFF9EF;}
   .job-top{display:flex; justify-content:space-between; align-items:flex-start; gap:14px;}
   .job-title{font-weight:700; font-size:1.04rem;}
   .job-company{color:var(--text-muted); font-size:0.88rem; margin-top:3px; background:none; border:none; padding:0; text-align:left; font-family:var(--font-body); cursor:pointer;}
@@ -201,6 +209,38 @@
   .modal{background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:34px; width:100%; max-width:380px; box-shadow:var(--shadow-md);}
   .modal h3{font-family:var(--font-display); font-size:1.3rem; margin-bottom:18px;}
   .modal .field{margin-bottom:14px;}
+  .auth-tabs{display:flex; gap:8px; margin-bottom:20px;}
+  .auth-tab{flex:1; padding:9px; border-radius:8px; border:1px solid var(--border); background:var(--bg-alt); color:var(--text-muted); font-size:0.82rem; font-weight:600;}
+  .auth-tab.active{background:var(--gold); color:#FFF9EF; border-color:var(--gold);}
+
+  .avatar-dot{width:26px; height:26px; border-radius:50%; background:var(--gold); color:#FFF9EF; font-size:0.78rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex:none;}
+  .profile-btn-wrap{position:relative;}
+  .profile-dropdown{position:absolute; top:calc(100% + 10px); right:0; background:var(--surface); border:1px solid var(--border); border-radius:12px; box-shadow:var(--shadow-md); padding:8px; min-width:180px; display:none; z-index:60;}
+  .profile-dropdown.show{display:block;}
+  .profile-dropdown button{width:100%; text-align:left; padding:10px 12px; border-radius:8px; background:none; border:none; color:var(--text); font-size:0.88rem;}
+  .profile-dropdown button:hover{background:var(--bg-alt);}
+
+  .ai-fab{position:fixed; bottom:26px; right:26px; z-index:90; background:var(--gold); color:#FFF9EF; border:none; border-radius:999px; padding:14px 22px; font-weight:700; font-size:0.88rem; box-shadow:var(--shadow-md); transition:transform .2s;}
+  .ai-fab:hover{transform:translateY(-2px);}
+  .ai-panel{position:fixed; bottom:96px; right:26px; width:340px; max-width:calc(100vw - 40px); background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow-md); z-index:90; display:none; flex-direction:column; overflow:hidden;}
+  .ai-panel.show{display:flex;}
+  .ai-panel-head{padding:16px 18px; border-bottom:1px solid var(--border);}
+  .ai-panel-head h4{font-family:var(--font-display); font-size:1.05rem;}
+  .ai-panel-head span{font-size:0.74rem; color:var(--text-muted); display:block; margin-top:3px;}
+  .ai-messages{flex:1; max-height:300px; overflow-y:auto; padding:16px 18px; display:flex; flex-direction:column; gap:10px;}
+  .ai-msg{font-size:0.86rem; padding:10px 13px; border-radius:12px; max-width:88%; line-height:1.45;}
+  .ai-msg.bot{background:var(--bg-alt); color:var(--text); align-self:flex-start; border-bottom-left-radius:4px;}
+  .ai-msg.user{background:var(--gold); color:#FFF9EF; align-self:flex-end; border-bottom-right-radius:4px;}
+  .ai-suggest{display:flex; flex-wrap:wrap; gap:6px; padding:0 18px 12px;}
+  .ai-suggest button{font-size:0.72rem; padding:6px 11px; border-radius:999px; border:1px solid var(--border); background:var(--bg-alt); color:var(--text-muted);}
+  .ai-suggest button:hover{border-color:var(--gold); color:var(--gold);}
+  .ai-input-row{display:flex; gap:8px; padding:14px 16px; border-top:1px solid var(--border);}
+  .ai-input-row input{flex:1; border:1px solid var(--border); background:var(--bg-alt); border-radius:10px; padding:10px 13px; font-family:var(--font-body); color:var(--text); font-size:0.86rem;}
+  .ai-input-row button{background:var(--gold); color:#FFF9EF; border:none; border-radius:10px; padding:0 16px; font-weight:700;}
+  @media (max-width:680px){
+    .ai-panel{right:12px; left:12px; width:auto;}
+    .ai-fab{right:16px; bottom:16px;}
+  }
   .toast{position:fixed; bottom:26px; left:50%; transform:translate(-50%, 20px); background:var(--gold); color:#FFF9EF; font-weight:600; padding:13px 24px; border-radius:999px; font-size:0.9rem; z-index:200; opacity:0; transition:all .3s; pointer-events:none; box-shadow:var(--shadow-md);}
   .toast.show{opacity:1; transform:translate(-50%,0);}
 
@@ -253,15 +293,14 @@
   <nav class="wrap">
     <button class="logo" onclick="showView('home')"><span>Зам</span><span class="dash"></span></button>
     <div class="nav-links">
-      <button onclick="showView('home','#jobs')">Ажлын байр</button>
-      <button onclick="showView('home','#salary')">Цалингийн мэдээлэл</button>
-      <button onclick="showView('tracker')">Миний зам</button>
-      <button onclick="showView('employer')">Байгууллагад</button>
+      <button data-i18n="navJobs" onclick="showView('home','#jobs')">Ажлын байр</button>
+      <button data-i18n="navCompanies" onclick="showView('companies')">Компаниуд</button>
+      <button data-i18n="navSalary" onclick="showView('home','#salary')">Цалингийн мэдээлэл</button>
+      <button data-i18n="navTracker" onclick="showView('tracker')">Миний зам</button>
+      <button data-i18n="navEmployer" onclick="showView('employer')">Байгууллагад</button>
     </div>
-    <div class="nav-cta">
-      <button class="btn" onclick="openLogin()">Нэвтрэх</button>
-      <button class="btn btn-solid" onclick="showView('cv')">CV байршуулах</button>
-    </div>
+    <div class="nav-cta" id="navCta"></div>
+    <button class="btn btn-sm" id="langToggle" onclick="setLang(LANG==='mn'?'en':'mn')" style="margin-left:4px;">EN</button>
     <button class="nav-toggle" aria-label="Цэс">☰</button>
   </nav>
 </header>
@@ -272,17 +311,24 @@
 <section class="hero">
   <div class="hero-mesh" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="eyebrow"><span class="road-dot"></span>МОНГОЛЫН АЖЛЫН ЗАХ ЗЭЭЛ</div>
-    <h1>Ажлын зам чинь <em>эндээс</em> эхэлнэ</h1>
-    <p class="hero-sub">Нэг CV — олон боломж. Танд тохирсон ажлыг санал болгоод, цалингийн хэмжээг нуулгүй харуулж, хайлтын явц бүрийг чинь үнэн зөвөөр дагаж явдаг платформ.</p>
+    <div class="eyebrow"><span class="road-dot"></span><span data-i18n="heroEyebrow">МОНГОЛЫН АЖЛЫН ЗАХ ЗЭЭЛ</span></div>
+    <h1 data-i18n="heroH1">Ажлын зам чинь <em>эндээс</em> эхэлнэ</h1>
+    <p class="hero-sub" data-i18n="heroSub">Нэг CV — олон боломж. Танд тохирсон ажлыг санал болгоод, цалингийн хэмжээг нуулгүй харуулж, хайлтын явц бүрийг чинь үнэн зөвөөр дагаж явдаг платформ.</p>
     <div class="search-box">
-      <input type="text" id="heroSearch" placeholder="Ямар ажил хайж байна вэ? — жишээ нь “фронтэнд хөгжүүлэгч”">
-      <button class="btn btn-solid" onclick="runSearch()">Хайх</button>
+      <input type="text" id="heroSearch" data-i18n-ph="searchPh" placeholder="Ямар ажил хайж байна вэ? — жишээ нь “фронтэнд хөгжүүлэгч”">
+      <button class="btn btn-solid" data-i18n="searchBtn" onclick="runSearch()">Хайх</button>
+    </div>
+    <div class="hero-quicklinks">
+      <button class="quick-chip" data-i18n="qStudent" onclick="filterFromCategory('parttime')">🎓 Оюутны цагийн ажил</button>
+      <button class="quick-chip" data-i18n="qIntl" onclick="showView('home','#returnee')">🌍 Гадаад дипломтой</button>
+      <button class="quick-chip" data-i18n="qRemote" onclick="filterRemote()">🏠 Зайнаас ажиллах боломжтой</button>
+      <button class="quick-chip" data-i18n="qAccess" onclick="filterAccessible()">♿ Хөгжлийн бэрхшээлтэй иргэнд</button>
+      <button class="quick-chip" data-i18n="qAll" onclick="showView('home','#jobs')">💼 Бүх ажлын байр</button>
     </div>
     <div class="hero-stats">
-      <div class="stat"><b id="statActive">–</b><span>идэвхтэй ажлын байр</span></div>
-      <div class="stat"><b>100%</b><span>цалинтай зарууд</span></div>
-      <div class="stat"><b>3.4 өдөр</b><span>дундаж хариу хугацаа</span></div>
+      <div class="stat"><b id="statActive">–</b><span data-i18n="statActiveLbl">идэвхтэй ажлын байр</span></div>
+      <div class="stat"><b>100%</b><span data-i18n="statPaidLbl">цалинтай зарууд</span></div>
+      <div class="stat"><b>3.4 <span data-i18n="statDayLbl">өдөр</span></b><span data-i18n="statRespLbl">дундаж хариу хугацаа</span></div>
     </div>
   </div>
 </section>
@@ -291,9 +337,9 @@
   <div class="wrap">
     <div class="section-head" data-reveal>
       <div>
-        <div class="kicker">Яагаад Зам</div>
-        <h2>Ажил хайх дөрвөн бэрхшээлийг нэг дор шийдсэн</h2>
-        <p class="section-sub">Одоо байгаа платформуудын хэрэглэгчдийн шүүмжилсэн дутагдлуудыг тодорхой засварласан.</p>
+        <div class="kicker" data-i18n="whyKicker">Яагаад Зам</div>
+        <h2 data-i18n="whyTitle">Ажил хайх дөрвөн бэрхшээлийг нэг дор шийдсэн</h2>
+        <p class="section-sub" data-i18n="whySub">Одоо байгаа платформуудын хэрэглэгчдийн шүүмжилсэн дутагдлуудыг тодорхой засварласан.</p>
       </div>
     </div>
     <div class="feature-grid">
@@ -329,9 +375,9 @@
   <div class="wrap">
     <div class="section-head" data-reveal>
       <div>
-        <div class="kicker">Танд тохирсон</div>
-        <h2>Ур чадварт чинь тулгуурласан санал</h2>
-        <p class="section-sub">Жишээ профайл: React, JavaScript, Node.js. Тохирсон шалтгааныг доор тодорхой бичсэн — зөвхөн ойролцоо ажил биш.</p>
+        <div class="kicker" data-i18n="recKicker">Танд тохирсон</div>
+        <h2 data-i18n="recTitle">Ур чадварт чинь тулгуурласан санал</h2>
+        <p class="section-sub" data-i18n="recSub">Жишээ профайл: React, JavaScript, Node.js. Тохирсон шалтгааныг доор тодорхой бичсэн — зөвхөн ойролцоо ажил биш.</p>
       </div>
     </div>
     <div class="recommend-grid" id="recGrid" data-reveal></div>
@@ -342,9 +388,9 @@
   <div class="wrap">
     <div class="section-head" data-reveal>
       <div>
-        <div class="kicker">Гадаадаас ирсэн төгсөгчдөд</div>
-        <h2>Гадаадад сурч, буцаж ирсэн бол</h2>
-        <p class="section-sub">Диплом баталгаажуулах, тохирох ажил олох алхмуудыг нэг дор.</p>
+        <div class="kicker" data-i18n="returneeKicker">Гадаадаас ирсэн төгсөгчдөд</div>
+        <h2 data-i18n="returneeTitle">Гадаадад сурч, буцаж ирсэн бол</h2>
+        <p class="section-sub" data-i18n="returneeSub">Диплом баталгаажуулах, тохирох ажил олох алхмуудыг нэг дор.</p>
       </div>
     </div>
     <div class="feature-grid" style="grid-template-columns:repeat(3,1fr);">
@@ -373,9 +419,9 @@
   <div class="wrap">
     <div class="section-head" data-reveal>
       <div>
-        <div class="kicker">Хэрхэн ажилладаг вэ</div>
-        <h2>Дөрвөн алхамтай зам</h2>
-        <p class="section-sub">Бүртгүүлснээс ажилд орох хүртэлх бүх алхмыг нэг дэлгэц дээрээс хянана.</p>
+        <div class="kicker" data-i18n="journeyKicker">Хэрхэн ажилладаг вэ</div>
+        <h2 data-i18n="journeyTitle">Дөрвөн алхамтай зам</h2>
+        <p class="section-sub" data-i18n="journeySub">Бүртгүүлснээс ажилд орох хүртэлх бүх алхмыг нэг дэлгэц дээрээс хянана.</p>
       </div>
     </div>
     <div class="journey" data-reveal>
@@ -401,14 +447,56 @@
 
 <section id="jobs" class="section-alt">
   <div class="wrap">
+    <div id="featuredWrap" style="margin-bottom:44px;">
+      <div class="section-head" data-reveal style="margin-bottom:22px;">
+        <div>
+          <div class="kicker" data-i18n="featKicker">⭐ Төлбөртэй байршил</div>
+          <h2 data-i18n="featTitle">Онцлох зарууд</h2>
+          <p class="section-sub" data-i18n="featSub">Байгууллага эсвэл хувь хүн 4,900₮ төлж зараа хамгийн эхэнд, онцолж байршуулж болно.</p>
+        </div>
+      </div>
+      <div class="job-grid" id="featuredStrip"></div>
+    </div>
     <div class="section-head" data-reveal>
       <div>
-        <div class="kicker">Идэвхтэй байгууллагуудаас</div>
-        <h2>Ажлын байрууд</h2>
-        <p class="section-sub">Жишээ өгөгдөл — бодит ажлын зарууд биш. Дэлгэрэнгүйг үзэхийг дараарай.</p>
+        <div class="kicker" data-i18n="jobsKicker">Идэвхтэй байгууллагуудаас</div>
+        <h2 data-i18n="jobsTitle">Бүх ажлын байрууд</h2>
+        <p class="section-sub" data-i18n="jobsSub">Жишээ өгөгдөл — бодит ажлын зарууд биш. Дэлгэрэнгүйг үзэхийг дараарай.</p>
       </div>
     </div>
     <div class="job-toolbar" id="chips"></div>
+    <button class="quick-chip" id="advFilterToggle" onclick="toggleAdvFilters()" style="margin-bottom:16px;" data-i18n="advToggle">⚙️ Дэлгэрэнгүй шүүлтүүр</button>
+    <div class="filter-panel" id="filterPanel" style="display:none;">
+      <div class="filter-row">
+        <div class="field" style="margin:0;"><label data-i18n="filterSalaryLbl">Цалингийн доод хязгаар</label>
+          <select id="filterSalarySel" onchange="onFilterChange()">
+            <option value="0" data-i18n="filterAll">Бүгд</option>
+            <option value="1500000">1.5M+</option>
+            <option value="2000000">2M+</option>
+            <option value="3000000">3M+</option>
+            <option value="4000000">4M+</option>
+          </select>
+        </div>
+        <div class="field" style="margin:0;"><label data-i18n="filterTypeLbl">Ажлын төрөл</label>
+          <select id="filterTypeSel" onchange="onFilterChange()">
+            <option value="all" data-i18n="filterAll">Бүгд</option>
+            <option value="Бүтэн цагийн" data-i18n="typeFull">Бүтэн цагийн</option>
+            <option value="Хагас цагийн" data-i18n="typeHalf">Хагас цагийн</option>
+            <option value="Гэрээт" data-i18n="typeContract">Гэрээт</option>
+            <option value="Цагийн ажил" data-i18n="typeHourly">Цагийн ажил</option>
+          </select>
+        </div>
+        <div class="field" style="margin:0;"><label data-i18n="filterSortLbl">Эрэмбэлэх</label>
+          <select id="filterSortSel" onchange="onFilterChange()">
+            <option value="newest" data-i18n="sortNewest">Шинэ эхэндээ</option>
+            <option value="featured" data-i18n="sortFeatured">Онцлох эхэндээ</option>
+            <option value="salary-high" data-i18n="sortSalaryHigh">Цалин: өндрөөс бага</option>
+            <option value="salary-low" data-i18n="sortSalaryLow">Цалин: багаас өндөр</option>
+          </select>
+        </div>
+        <button class="btn" onclick="resetAdvancedFilters(); onFilterChange();" data-i18n="filterClear">Цэвэрлэх</button>
+      </div>
+    </div>
     <div class="job-grid" id="jobGrid" data-reveal></div>
   </div>
 </section>
@@ -416,7 +504,7 @@
 <section id="categories">
   <div class="wrap">
     <div class="section-head" data-reveal>
-      <div><div class="kicker">Ангилал</div><h2>Салбараар нь хайх</h2></div>
+      <div><div class="kicker" data-i18n="catKicker">Ангилал</div><h2 data-i18n="catTitle">Салбараар нь хайх</h2></div>
     </div>
     <div class="cat-grid" id="catGrid" data-reveal></div>
   </div>
@@ -426,8 +514,8 @@
   <div class="wrap">
     <div class="section-head" data-reveal>
       <div>
-        <div class="kicker">Ажилтны эрэлт</div>
-        <h2>Аль салбарт хамгийн их шаардлагатай байна вэ?</h2>
+        <div class="kicker" data-i18n="demandKicker">Ажилтны эрэлт</div>
+        <h2 data-i18n="demandTitle">Аль салбарт хамгийн их шаардлагатай байна вэ?</h2>
         <span class="salary-note">Жишээ өгөгдөл — идэвхтэй ажлын байрны тоонд үндэслэсэн жишээ үзүүлэлт, албан ёсны статистик биш</span>
       </div>
     </div>
@@ -439,8 +527,8 @@
   <div class="wrap">
     <div class="section-head" data-reveal>
       <div>
-        <div class="kicker">Цалингийн мэдээлэл</div>
-        <h2>Ангилал тус бүрийн дундаж цалин</h2>
+        <div class="kicker" data-i18n="salKicker">Цалингийн мэдээлэл</div>
+        <h2 data-i18n="salTitle">Ангилал тус бүрийн дундаж цалин</h2>
         <span class="salary-note">Жишээ өгөгдөл — сар бүрийн дундаж, ₮ сая</span>
       </div>
     </div>
@@ -458,7 +546,7 @@
 <section>
   <div class="wrap">
     <div class="cta" data-reveal>
-      <div><h2>CV-гээ бэлдчихсэн үү?</h2><p>Байршуулаад, танд тохирох эхний саналуудыг өнөөдрөөс аваарай.</p></div>
+      <div><h2 data-i18n="ctaTitle">CV-гээ бэлдчихсэн үү?</h2><p data-i18n="ctaSub">Байршуулаад, танд тохирох эхний саналуудыг өнөөдрөөс аваарай.</p></div>
       <div class="cta-actions">
         <button class="btn btn-solid" onclick="showView('cv')">CV байршуулах</button>
         <button class="btn" onclick="showView('home','#jobs')">Эхлээд ажлын байр харах</button>
@@ -483,9 +571,9 @@
 <main id="view-cv" class="view">
   <div class="wrap subview-head">
     <button class="back-btn" onclick="showView('home')">← Нүүр хуудас руу буцах</button>
-    <div class="kicker">CV байршуулах</div>
-    <h2>CV-гээ нэг л удаа бөглөнө</h2>
-    <p class="section-sub" style="margin-bottom:36px;">Загвар, өнгөө сонгоод хадгалахад дэлгэрэнгүй, ангилал тус бүрээр задалсан зөвлөмж өгнө — ерөнхий нэг мөр зөвлөмж биш.</p>
+    <div class="kicker" data-i18n="cvKicker">CV байршуулах</div>
+    <h2 data-i18n="cvTitle">CV-гээ нэг л удаа бөглөнө</h2>
+    <p class="section-sub" style="margin-bottom:36px;" data-i18n="cvSub">Загвар, өнгөө сонгоод хадгалахад дэлгэрэнгүй, ангилал тус бүрээр задалсан зөвлөмж өгнө — ерөнхий нэг мөр зөвлөмж биш.</p>
   </div>
   <div class="wrap" style="padding-bottom:90px;">
     <div class="cv-layout">
@@ -538,12 +626,25 @@
 <main id="view-tracker" class="view">
   <div class="wrap subview-head">
     <button class="back-btn" onclick="showView('home')">← Нүүр хуудас руу буцах</button>
-    <div class="kicker">Миний зам</div>
-    <h2>Илгээсэн CV-гийн явц</h2>
-    <p class="section-sub" style="margin-bottom:36px;">Ажил олгогчоос ирсэн сүүлийн баталгаажсан шинэчлэлт л энд харагдана — таамаглал, хуучин статус гарахгүй.</p>
+    <div class="kicker" data-i18n="trackKicker">Миний зам</div>
+    <h2 data-i18n="trackTitle">Илгээсэн CV-гийн явц</h2>
+    <p class="section-sub" style="margin-bottom:36px;" data-i18n="trackSub">Ажил олгогчоос ирсэн сүүлийн баталгаажсан шинэчлэлт л энд харагдана — таамаглал, хуучин статус гарахгүй.</p>
   </div>
   <div class="wrap" style="padding-bottom:90px;">
     <div id="trackerList"></div>
+  </div>
+</main>
+
+<!-- ============ COMPANIES DIRECTORY ============ -->
+<main id="view-companies" class="view">
+  <div class="wrap subview-head">
+    <button class="back-btn" onclick="showView('home')">← Нүүр хуудас руу буцах</button>
+    <div class="kicker" data-i18n="compKicker">Байгууллагууд</div>
+    <h2 data-i18n="compTitle">Бүх компани</h2>
+    <p class="section-sub" style="margin-bottom:36px;" data-i18n="compSub">Идэвхтэй зартай байгууллагууд. Компани дээр дарж, тэдний бүх зарыг нэг дор үзээрэй.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:90px;">
+    <div class="cat-grid" id="companiesGrid" style="grid-template-columns:repeat(3,1fr);"></div>
   </div>
 </main>
 
@@ -561,14 +662,22 @@
 <main id="view-employer" class="view">
   <div class="wrap subview-head">
     <button class="back-btn" onclick="showView('home')">← Нүүр хуудас руу буцах</button>
-    <div class="kicker">Байгууллагад зориулсан</div>
-    <h2>Ажлын байраа энд нийтлээрэй</h2>
-    <p class="section-sub" style="margin-bottom:36px;">Бүртгэлтэй байгууллага сонгоод мэдээллээ бөглөхөд, зар шууд идэвхтэй жагсаалт болон компанийн профайл хуудсанд нэмэгдэнэ.</p>
+    <div class="kicker" data-i18n="empKicker">Байгууллагад зориулсан</div>
+    <h2 data-i18n="empTitle">Ажлын байраа энд нийтлээрэй</h2>
+    <p class="section-sub" style="margin-bottom:36px;" data-i18n="empSub">Бүртгэлтэй байгууллага сонгоод мэдээллээ бөглөхөд, зар шууд идэвхтэй жагсаалт болон компанийн профайл хуудсанд нэмэгдэнэ.</p>
   </div>
   <div class="wrap" style="padding-bottom:90px;">
     <div class="cv-layout">
       <form class="cv-form" id="jobPostForm">
-        <div class="field"><label for="jpCompany">Байгууллага</label><select id="jpCompany" required></select></div>
+        <div class="field">
+          <label>Зарлаж буй тал</label>
+          <div class="theme-picker" style="gap:8px;">
+            <button type="button" class="auth-tab active" id="posterTypeCompany" style="flex:1;" onclick="setPosterType('company')">Байгууллага</button>
+            <button type="button" class="auth-tab" id="posterTypeIndividual" style="flex:1;" onclick="setPosterType('individual')">Хувь хүн</button>
+          </div>
+        </div>
+        <div class="field"><label for="jpPosterName" id="jpPosterNameLabel">Байгууллагын нэр</label><input id="jpPosterName" type="text" placeholder="Жишээ нь: Модон Тек ХХК" required></div>
+        <div class="field" id="jpContactField" style="display:none;"><label for="jpContact">Холбогдох утас/имэйл</label><input id="jpContact" type="text" placeholder="9911-XXXX эсвэл имэйл"></div>
         <div class="field"><label for="jpTitle">Ажлын байрны нэр</label><input id="jpTitle" type="text" placeholder="Жишээ нь: Маркетингийн шинжээч" required></div>
         <div class="field"><label for="jpCat">Ангилал</label><select id="jpCat" required></select></div>
         <div class="field"><label for="jpType">Ажлын төрөл</label><select id="jpType"><option>Бүтэн цагийн</option><option>Хагас цагийн</option><option>Гэрээт</option></select></div>
@@ -579,15 +688,54 @@
         <div class="field"><label for="jpSummary">Ажлын тухай товч</label><textarea id="jpSummary" rows="3" placeholder="Энэ ажлын байрны гол зорилго..."></textarea></div>
         <div class="field"><label for="jpReq">Шаардлага (мөр бүрт нэгийг бичнэ)</label><textarea id="jpReq" rows="3" placeholder="2-с дээш жил туршлага
 Excel сайн мэддэг"></textarea></div>
+        <div class="field" style="display:flex; align-items:center; gap:10px; background:var(--gold-soft); border:1px solid var(--gold); border-radius:10px; padding:12px 14px;">
+          <input type="checkbox" id="jpFeatured" style="width:auto;">
+          <label for="jpFeatured" style="margin:0; color:var(--text); font-size:0.88rem;">⭐ Онцлох зар болгох — <b>4,900₮</b> (хамгийн эхэнд харагдана)</label>
+        </div>
         <button type="submit" class="btn btn-solid" style="margin-top:6px;">Ажлын зар нийтлэх</button>
       </form>
       <div class="job-detail-side" style="position:static;">
         <h3 style="margin-bottom:14px;">Яагаад Зам дээр нийтлэх вэ?</h3>
         <div class="side-row"><span>Идэвхтэй горилогч</span><span id="statActive2">–</span></div>
         <div class="side-row"><span>Дундаж хариу хугацаа</span><span>3.4 өдөр</span></div>
-        <div class="side-row"><span>Зар нийтлэх төлбөр</span><span>Энэ бол дизайн загвар</span></div>
-        <p style="color:var(--text-muted); font-size:0.86rem; margin-top:16px;">Нийтэлсэн зар шууд "Ажлын байрууд" жагсаалт болон компанийн профайл хуудсанд харагдана.</p>
+        <div class="side-row"><span>Энгийн зар</span><span>Үнэгүй</span></div>
+        <div class="side-row"><span>⭐ Онцлох зар</span><span>4,900₮</span></div>
+        <p style="color:var(--text-muted); font-size:0.86rem; margin-top:16px;">Компани эсвэл хувь хүн хэнээр ч нийтлэж болно. Энэ бол дизайн загвар — төлбөр бодитоор авахгүй.</p>
       </div>
+    </div>
+  </div>
+</main>
+
+<!-- ============ PROFILE ============ -->
+<main id="view-profile" class="view">
+  <div class="wrap subview-head">
+    <button class="back-btn" onclick="showView('home')">← Нүүр хуудас руу буцах</button>
+    <div class="kicker" data-i18n="profKicker">Профайл</div>
+    <h2 data-i18n="profTitle">Миний профайл</h2>
+    <p class="section-sub" style="margin-bottom:28px;" data-i18n="profSub">Бүртгэлийн мэдээлэл, илгээсэн хүсэлтийн явц нэг дор. Энэ бол дизайн загвар — өгөгдөл серверт хадгалагдахгүй.</p>
+  </div>
+  <div class="wrap" style="padding-bottom:90px;">
+    <div class="company-header" id="profileIdentity"></div>
+    <div class="cv-layout">
+      <form class="cv-form" id="profileForm">
+        <div class="field"><label for="pfName">Овог нэр</label><input id="pfName" type="text" required></div>
+        <div class="field"><label for="pfEmail">И-мэйл</label><input id="pfEmail" type="email" required></div>
+        <div class="field"><label for="pfPhone">Утасны дугаар</label><input id="pfPhone" type="text" placeholder="9911-XXXX"></div>
+        <div class="field"><label for="pfLocation">Байршил</label><input id="pfLocation" type="text" placeholder="Улаанбаатар"></div>
+        <button type="submit" class="btn btn-solid" style="margin-top:6px;">Хадгалах</button>
+      </form>
+      <div class="job-detail-side" style="position:static;">
+        <h3 style="margin-bottom:14px;">Миний үйл ажиллагаа</h3>
+        <div class="side-row"><span>Илгээсэн CV</span><span id="pfAppCount">0</span></div>
+        <div class="side-row"><span>Баталгаажуулалт</span><span id="pfVerifyStatus">Баталгаажаагүй</span></div>
+        <button class="btn" style="width:100%; margin-top:16px;" id="pfVerifyBtn" onclick="startEMongoliaVerify()">🆔 E-Mongolia-гаар баталгаажуулах</button>
+        <button class="btn" style="width:100%; margin-top:10px;" onclick="showView('cv')">CV засах →</button>
+        <p style="color:var(--text-muted); font-size:0.78rem; margin-top:12px;">Жишээ симуляц — жинхэнэ E-Mongolia системд холбогдоогүй болно.</p>
+      </div>
+    </div>
+    <div class="jd-block">
+      <h3>Илгээсэн хүсэлтүүд ба явц</h3>
+      <div id="profileApplications" style="margin-top:16px;"></div>
     </div>
   </div>
 </main>
@@ -596,9 +744,9 @@ Excel сайн мэддэг"></textarea></div>
   <div class="wrap footer-row">
     <button class="logo" style="font-size:1.2rem;" onclick="showView('home')"><span>Зам</span><span class="dash" style="width:18px;"></span></button>
     <div class="footer-links">
-      <button onclick="showView('home')">Бидний тухай</button>
-      <button onclick="showView('employer')">Байгууллагад зориулсан</button>
-      <button onclick="openLogin()">Холбоо барих</button>
+      <button data-i18n="footAbout" onclick="showView('home')">Бидний тухай</button>
+      <button data-i18n="footEmployer" onclick="showView('employer')">Байгууллагад зориулсан</button>
+      <button data-i18n="footContact" onclick="openContact()">Холбоо барих</button>
     </div>
     <span>© 2026 Зам · хөгжүүлэгч Orgil</span>
   </div>
@@ -607,17 +755,147 @@ Excel сайн мэддэг"></textarea></div>
 <!-- login modal -->
 <div class="overlay" id="loginOverlay" onclick="if(event.target===this) closeLogin()">
   <div class="modal">
-    <h3>Нэвтрэх</h3>
-    <div class="field"><label>И-мэйл хаяг</label><input type="email" placeholder="tanii@mail.mn"></div>
-    <div class="field"><label>Нууц үг</label><input type="password" placeholder="••••••••"></div>
-    <button class="btn btn-solid" style="width:100%;" onclick="fakeLogin()">Нэвтрэх</button>
-    <p style="margin-top:14px; font-size:0.8rem; color:var(--text-muted); text-align:center;">Энэ бол дизайн загвар — жинхэнэ бүртгэл үүсгэхгүй.</p>
+    <div class="auth-tabs">
+      <button type="button" class="auth-tab active" id="tabLogin" onclick="switchAuthTab('login')">Нэвтрэх</button>
+      <button type="button" class="auth-tab" id="tabRegister" onclick="switchAuthTab('register')">Шинээр бүртгүүлэх</button>
+    </div>
+    <form id="authForm">
+      <div class="field" id="authNameField" style="display:none;"><label>Овог нэр</label><input id="authName" type="text" placeholder="Бат-Эрдэнэ Ганбаатар"></div>
+      <div class="field"><label>И-мэйл хаяг</label><input id="authEmail" type="email" placeholder="tanii@mail.mn" required></div>
+      <div class="field"><label>Нууц үг (доод тал нь 6 тэмдэгт)</label><input id="authPassword" type="password" placeholder="••••••••" required minlength="6"></div>
+      <div class="field" id="authConfirmField" style="display:none;"><label>Нууц үг давтах</label><input id="authConfirm" type="password" placeholder="••••••••"></div>
+      <p id="authError" style="color:var(--red); font-size:0.82rem; margin-bottom:12px; display:none;"></p>
+      <button type="submit" class="btn btn-solid" style="width:100%;" id="authSubmit">Нэвтрэх</button>
+    </form>
+    <p style="margin-top:14px; font-size:0.8rem; color:var(--text-muted); text-align:center;">Энэ бол дизайн загвар — мэдээлэл зөвхөн энэ цонхны хугацаанд санагдана.</p>
   </div>
+</div>
+
+<!-- Онцлох зар: төлбөрийн мэдээлэл -->
+<div class="overlay" id="featuredPayOverlay" onclick="if(event.target===this) closeFeaturedPay()">
+  <div class="modal">
+    <h3>🎉 Зар нийтлэгдлээ!</h3>
+    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:18px;">Онцлох болгохын тулд доорх дансанд <b>4,900₮</b> шилжүүлээд, гүйлгээний утга дээр ажлын байрны нэрээ бичнэ үү.</p>
+    <div style="background:var(--bg-alt); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:16px;">
+      <div class="side-row"><span>Банк</span><span>Голомт банк</span></div>
+      <div class="side-row"><span>Дансны дугаар</span><span style="font-family:var(--font-mono);">460015001175154648</span></div>
+      <div class="side-row" style="border-bottom:none;"><span>Хүлээн авагч</span><span>Orgil Tugsbayar</span></div>
+    </div>
+    <p style="color:var(--text-muted); font-size:0.86rem; margin-bottom:16px;">Шилжүүлснийхээ дараа баталгаажуулахын тулд бидэнтэй холбогдоно уу: <a href="mailto:Orgil3311@gmail.com" style="color:var(--gold);">Orgil3311@gmail.com</a></p>
+    <button class="btn btn-solid" style="width:100%;" onclick="closeFeaturedPay()">Ойлголоо</button>
+  </div>
+</div>
+
+<!-- Холбоо барих / Хамтран ажиллах -->
+<div class="overlay" id="contactOverlay" onclick="if(event.target===this) closeContact()">
+  <div class="modal">
+    <h3>Хамтран ажиллах</h3>
+    <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:16px;">Санал хүсэлт, хамтран ажиллах саналтай бол доорх и-мэйлээр холбогдоорой:</p>
+    <a href="mailto:Orgil3311@gmail.com" class="btn btn-solid" style="width:100%; display:block; text-align:center; margin-bottom:10px;">Orgil3311@gmail.com</a>
+    <button class="btn" style="width:100%;" onclick="closeContact()">Хаах</button>
+  </div>
+</div>
+
+<!-- AI Зөвлөх -->
+<button class="ai-fab" id="aiFab" onclick="toggleAiPanel()">🤖 AI Зөвлөх</button>
+<div class="ai-panel" id="aiPanel">
+  <div class="ai-panel-head">
+    <h4>🤖 AI Зөвлөх</h4>
+    <span>Жишээ зөвлөх систем — түгээмэл асуултад тулгуурлан хариулна</span>
+  </div>
+  <div class="ai-messages" id="aiMessages"></div>
+  <div class="ai-suggest" id="aiSuggest">
+    <button onclick="askAi('Надад тохирох ажил юу вэ?')">Надад тохирох ажил юу вэ?</button>
+    <button onclick="askAi('CV-гээ хэрхэн сайжруулах вэ?')">CV сайжруулах</button>
+    <button onclick="askAi('Цалингийн хэлэлцээр хэрхэн хийх вэ?')">Цалин хэлэлцэх</button>
+    <button onclick="askAi('Ярилцлагад хэрхэн бэлдэх вэ?')">Ярилцлагад бэлдэх</button>
+  </div>
+  <form class="ai-input-row" id="aiForm">
+    <input id="aiInput" type="text" placeholder="Асуултаа бичнэ үү...">
+    <button type="submit">↑</button>
+  </form>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
+  let LANG = 'mn';
+  const I18N = {
+    mn:{
+      navJobs:'Ажлын байр', navCompanies:'Компаниуд', navSalary:'Цалингийн мэдээлэл', navTracker:'Миний зам', navEmployer:'Байгууллагад',
+      heroEyebrow:'МОНГОЛЫН АЖЛЫН ЗАХ ЗЭЭЛ',
+      heroH1:'Ажлын зам чинь <em>эндээс</em> эхэлнэ',
+      heroSub:'Нэг CV — олон боломж. Танд тохирсон ажлыг санал болгоод, цалингийн хэмжээг нуулгүй харуулж, хайлтын явц бүрийг чинь үнэн зөвөөр дагаж явдаг платформ.',
+      searchPh:'Ямар ажил хайж байна вэ? — жишээ нь “фронтэнд хөгжүүлэгч”', searchBtn:'Хайх',
+      qStudent:'🎓 Оюутны цагийн ажил', qIntl:'🌍 Гадаад дипломтой', qRemote:'🏠 Зайнаас ажиллах боломжтой', qAccess:'♿ Хөгжлийн бэрхшээлтэй иргэнд', qAll:'💼 Бүх ажлын байр',
+      statActiveLbl:'идэвхтэй ажлын байр', statPaidLbl:'цалинтай зарууд', statDayLbl:'өдөр', statRespLbl:'дундаж хариу хугацаа',
+      whyKicker:'Яагаад Зам', whyTitle:'Ажил хайх дөрвөн бэрхшээлийг нэг дор шийдсэн', whySub:'Одоо байгаа платформуудын хэрэглэгчдийн шүүмжилсэн дутагдлуудыг тодорхой засварласан.',
+      recKicker:'Танд тохирсон', recTitle:'Ур чадварт чинь тулгуурласан санал', recSub:'Жишээ профайл: React, JavaScript, Node.js. Тохирсон шалтгааныг доор тодорхой бичсэн — зөвхөн ойролцоо ажил биш.',
+      returneeKicker:'Гадаадаас ирсэн төгсөгчдөд', returneeTitle:'Гадаадад сурч, буцаж ирсэн бол', returneeSub:'Диплом баталгаажуулах, тохирох ажил олох алхмуудыг нэг дор.',
+      journeyKicker:'Хэрхэн ажилладаг вэ', journeyTitle:'Дөрвөн алхамтай зам', journeySub:'Бүртгүүлснээс ажилд орох хүртэлх бүх алхмыг нэг дэлгэц дээрээс хянана.',
+      featKicker:'⭐ Төлбөртэй байршил', featTitle:'Онцлох зарууд', featSub:'Байгууллага эсвэл хувь хүн 4,900₮ төлж зараа хамгийн эхэнд, онцолж байршуулж болно.',
+      jobsKicker:'Идэвхтэй байгууллагуудаас', jobsTitle:'Бүх ажлын байрууд', jobsSub:'Жишээ өгөгдөл — бодит ажлын зарууд биш. Дэлгэрэнгүйг үзэхийг дараарай.',
+      catKicker:'Ангилал', catTitle:'Салбараар нь хайх',
+      demandKicker:'Ажилтны эрэлт', demandTitle:'Аль салбарт хамгийн их шаардлагатай байна вэ?',
+      salKicker:'Цалингийн мэдээлэл', salTitle:'Ангилал тус бүрийн дундаж цалин',
+      ctaTitle:'CV-гээ бэлдчихсэн үү?', ctaSub:'Байршуулаад, танд тохирох эхний саналуудыг өнөөдрөөс аваарай.',
+      cvKicker:'CV байршуулах', cvTitle:'CV-гээ нэг л удаа бөглөнө', cvSub:'Загвар, өнгөө сонгоод хадгалахад дэлгэрэнгүй, ангилал тус бүрээр задалсан зөвлөмж өгнө — ерөнхий нэг мөр зөвлөмж биш.',
+      trackKicker:'Миний зам', trackTitle:'Илгээсэн CV-гийн явц', trackSub:'Ажил олгогчоос ирсэн сүүлийн баталгаажсан шинэчлэлт л энд харагдана — таамаглал, хуучин статус гарахгүй.',
+      compKicker:'Байгууллагууд', compTitle:'Бүх компани', compSub:'Идэвхтэй зартай байгууллагууд. Компани дээр дарж, тэдний бүх зарыг нэг дор үзээрэй.',
+      empKicker:'Байгууллагад зориулсан', empTitle:'Ажлын байраа энд нийтлээрэй', empSub:'Бүртгэлтэй байгууллага сонгоод мэдээллээ бөглөхөд, зар шууд идэвхтэй жагсаалт болон компанийн профайл хуудсанд нэмэгдэнэ.',
+      profKicker:'Профайл', profTitle:'Миний профайл', profSub:'Бүртгэлийн мэдээлэл, илгээсэн хүсэлтийн явц нэг дор. Энэ бол дизайн загвар — өгөгдөл серверт хадгалагдахгүй.',
+      footAbout:'Бидний тухай', footEmployer:'Байгууллагад зориулсан', footContact:'Холбоо барих',
+      advToggle:'⚙️ Дэлгэрэнгүй шүүлтүүр', filterAll:'Бүгд', filterSalaryLbl:'Цалингийн доод хязгаар', filterTypeLbl:'Ажлын төрөл', filterSortLbl:'Эрэмбэлэх', filterClear:'Цэвэрлэх',
+      typeFull:'Бүтэн цагийн', typeHalf:'Хагас цагийн', typeContract:'Гэрээт', typeHourly:'Цагийн ажил',
+      sortNewest:'Шинэ эхэндээ', sortFeatured:'Онцлох эхэндээ', sortSalaryHigh:'Цалин: өндрөөс бага', sortSalaryLow:'Цалин: багаас өндөр',
+      detailsArrow:'Дэлгэрэнгүй →', daysAgo:'хоногийн өмнө нийтлэгдсэн',
+      badgeNew:'Шинэ', badgeFeatured:'Онцлох', badgeUrgent:'Яаралтай', badgeRemote:'Алсаас', badgeIndividual:'Хувь хүн', badgeStudent:'Оюутанд тохиромжтой',
+      intlPill:'Гадаад дипломтой тохиромжтой', accessPill:'Хөгжлийн бэрхшээлтэй иргэнд тохиромжтой',
+      emptyTitle:'Одоогоор тохирох зар алга'
+    },
+    en:{
+      navJobs:'Jobs', navCompanies:'Companies', navSalary:'Salary Guide', navTracker:'My Path', navEmployer:'For Employers',
+      heroEyebrow:'MONGOLIA\'S JOB MARKET',
+      heroH1:'Your career path <em>starts</em> here',
+      heroSub:'One CV, many opportunities. We match you with the right jobs, show real salary ranges upfront, and track your application status accurately.',
+      searchPh:'What job are you looking for? — e.g. "frontend developer"', searchBtn:'Search',
+      qStudent:'🎓 Student part-time jobs', qIntl:'🌍 Foreign-diploma friendly', qRemote:'🏠 Remote-friendly', qAccess:'♿ Accessible to people with disabilities', qAll:'💼 All jobs',
+      statActiveLbl:'active listings', statPaidLbl:'listings with salary shown', statDayLbl:'days', statRespLbl:'avg. response time',
+      whyKicker:'Why Zam', whyTitle:'Fixing four common frustrations in job hunting', whySub:'We addressed specific complaints users had about existing platforms.',
+      recKicker:'Matched for you', recTitle:'Recommendations based on your skills', recSub:'Sample profile: React, JavaScript, Node.js. We show exactly why each job matches — not just loosely related roles.',
+      returneeKicker:'For graduates returning from abroad', returneeTitle:'Studied abroad and coming back?', returneeSub:'Diploma verification and finding the right job, all in one place.',
+      journeyKicker:'How it works', journeyTitle:'A four-step path', journeySub:'From signing up to landing the job, track every step from one screen.',
+      featKicker:'⭐ Paid placement', featTitle:'Featured listings', featSub:'Companies or individuals can pay 4,900₮ to have their listing shown first, highlighted.',
+      jobsKicker:'From active organizations', jobsTitle:'All job listings', jobsSub:'Sample data — not real job postings. Click through for details.',
+      catKicker:'Categories', catTitle:'Browse by industry',
+      demandKicker:'Hiring demand', demandTitle:'Which industries need workers most?',
+      salKicker:'Salary guide', salTitle:'Average salary by category',
+      ctaTitle:'Got your CV ready?', ctaSub:'Upload it and start getting matched today.',
+      cvKicker:'Upload CV', cvTitle:'Fill it in once', cvSub:'Pick a template and color, and get detailed, categorized feedback — not a single generic tip.',
+      trackKicker:'My Path', trackTitle:'Your application progress', trackSub:'Only confirmed updates from employers appear here — no guessing, no stale statuses.',
+      compKicker:'Companies', compTitle:'All companies', compSub:'Organizations with active listings. Click a company to see all their openings.',
+      empKicker:'For employers', empTitle:'Post your job here', empSub:'Pick your organization and fill in the details — your listing appears instantly in the list and on your company page.',
+      profKicker:'Profile', profTitle:'My profile', profSub:'Account info and application progress in one place. This is a design demo — nothing is stored on a server.',
+      footAbout:'About', footEmployer:'For employers', footContact:'Contact',
+      advToggle:'⚙️ Advanced filters', filterAll:'All', filterSalaryLbl:'Minimum salary', filterTypeLbl:'Job type', filterSortLbl:'Sort by', filterClear:'Clear',
+      typeFull:'Full-time', typeHalf:'Part-time', typeContract:'Contract', typeHourly:'Hourly',
+      sortNewest:'Newest first', sortFeatured:'Featured first', sortSalaryHigh:'Salary: high to low', sortSalaryLow:'Salary: low to high',
+      detailsArrow:'Details →', daysAgo:'days ago',
+      badgeNew:'New', badgeFeatured:'Featured', badgeUrgent:'Urgent', badgeRemote:'Remote', badgeIndividual:'Individual', badgeStudent:'Student-friendly',
+      intlPill:'Foreign-diploma friendly', accessPill:'Accessible to people with disabilities',
+      emptyTitle:'No matching listings yet'
+    }
+  };
+  function t(key){ return (I18N[LANG] && I18N[LANG][key]) || (I18N.mn[key]) || key; }
+  function setLang(lang){
+    LANG = lang;
+    document.documentElement.lang = lang;
+    document.getElementById('langToggle').textContent = lang==='mn' ? 'EN' : 'МН';
+    document.querySelectorAll('[data-i18n]').forEach(el=>{ el.innerHTML = t(el.dataset.i18n); });
+    document.querySelectorAll('[data-i18n-ph]').forEach(el=>{ el.placeholder = t(el.dataset.i18nPh); });
+    renderChips(); renderJobGrid(currentCategory); renderFeatured(); renderCategories(); renderRecommended(); renderDemand(); renderIntlJobs(); renderCompanies(); populateEmployerForm();
+  }
+
   const JOBS = [
     { id:'fe-dev', title:'Фронтэнд хөгжүүлэгч', company:'Модон Тек ХХК', companyId:'modon-tek', intlFriendly:true, location:'Улаанбаатар, Сүхбаатар дүүрэг', cat:'it', catLabel:'IT / Технологи', type:'Бүтэн цагийн · Алсаас ажиллах боломжтой', salaryMin:2800000, salaryMax:4200000, postedDaysAgo:2, badge:'Шинэ',
       summary:'Хэрэглэгчийн интерфэйс хөгжүүлэх багт нэгдэж, React дээр суурилсан бүтээгдэхүүн дээр ажиллана.',
@@ -625,7 +903,7 @@ Excel сайн мэддэг"></textarea></div>
       requirements:['React, JavaScript (ES6+) 1-с дээш жил туршлага','Git ашиглаж чадах','Figma загвар унших чадвартай'],
       benefits:['Эрүүл мэндийн даатгал','Алсаас ажиллах боломж','Жилд 2 удаа сургалтын дэмжлэг'],
       skills:['React','JavaScript','Figma'] },
-    { id:'be-dev', title:'Backend хөгжүүлэгч', company:'Эрдэнэ Дата ХХК', companyId:'erdene-data', intlFriendly:true, location:'Улаанбаатар', cat:'it', catLabel:'IT / Технологи', type:'Бүтэн цагийн', salaryMin:3000000, salaryMax:4500000, postedDaysAgo:1, badge:'Онцлох',
+    { id:'be-dev', title:'Backend хөгжүүлэгч', company:'Эрдэнэ Дата ХХК', companyId:'erdene-data', intlFriendly:true, featured:true, location:'Улаанбаатар', cat:'it', catLabel:'IT / Технологи', type:'Бүтэн цагийн', salaryMin:3000000, salaryMax:4500000, postedDaysAgo:1, badge:'Онцлох',
       summary:'Node.js дээр суурилсан үйлчилгээнүүдийг өргөтгөх, өгөгдлийн сангийн гүйцэтгэлийг сайжруулах багт нэгдэнэ.',
       responsibilities:['Node.js/Express дээр API хөгжүүлэх','PostgreSQL өгөгдлийн сан загварчлах','Ачааллын тестийн үр дүнг сайжруулах'],
       requirements:['Node.js, PostgreSQL туршлагатай','REST API загварчлалын мэдлэгтэй','Docker ашиглаж чаддаг давуу тал'],
@@ -679,7 +957,7 @@ Excel сайн мэддэг"></textarea></div>
       requirements:['SQL сайн мэддэг','Excel/Power BI туршлагатай','Статистикийн үндсэн ойлголттой'],
       benefits:['Эрүүл мэндийн даатгал','Уян хатан цагийн хуваарь'],
       skills:['SQL','Power BI'] },
-    { id:'legal-counsel', title:'Хуулийн зөвлөх', company:'Жастис Партнерс ХХК', companyId:'justice-partners', location:'Улаанбаатар', cat:'legal', catLabel:'Хууль', type:'Бүтэн цагийн', salaryMin:2800000, salaryMax:4000000, postedDaysAgo:4, badge:'Онцлох',
+    { id:'legal-counsel', title:'Хуулийн зөвлөх', company:'Жастис Партнерс ХХК', companyId:'justice-partners', featured:true, location:'Улаанбаатар', cat:'legal', catLabel:'Хууль', type:'Бүтэн цагийн', salaryMin:2800000, salaryMax:4000000, postedDaysAgo:4, badge:'Онцлох',
       summary:'Байгууллагын гэрээ, хуулийн эрсдэлийн үнэлгээг хариуцна.',
       responsibilities:['Гэрээ боловсруулах, хянах','Хуулийн эрсдэлийн үнэлгээ хийх','Маргаан таслах ажиллагаанд оролцох'],
       requirements:['Хуулийн дээд боловсрол','Өмгөөлөгчийн эрхтэй бол давуу тал','3-с дээш жил туршлага'],
@@ -697,18 +975,72 @@ Excel сайн мэддэг"></textarea></div>
       requirements:['Хүний нөөцийн чиглэлээр 2-с дээш жил туршлага','Харилцааны сайн ур чадвартай'],
       benefits:['Уян хатан цагийн хуваарь','Гүйцэтгэлийн урамшуулал'],
       skills:['Сонгон шалгаруулалт'] },
-    { id:'content-manager', title:'Контент менежер', company:'Ногоон Ирээдүй ХХК', companyId:'nogoon-ireedui', intlFriendly:true, location:'Улаанбаатар', cat:'marketing', catLabel:'Маркетинг', type:'Бүтэн цагийн', salaryMin:2000000, salaryMax:2800000, postedDaysAgo:2, badge:'Шинэ',
+    { id:'content-manager', title:'Контент менежер', company:'Ногоон Ирээдүй ХХК', companyId:'nogoon-ireedui', intlFriendly:true, accessible:true, location:'Улаанбаатар', cat:'marketing', catLabel:'Маркетинг', type:'Бүтэн цагийн · Гэрээс ажиллах боломжтой', salaryMin:2000000, salaryMax:2800000, postedDaysAgo:2, badge:'Шинэ',
       summary:'Брэндийн сошиал медиа, блог контентыг төлөвлөж, бүтээнэ.',
       responsibilities:['Сарын контент төлөвлөгөө гаргах','Зураг, видео контент захиалах, хянах','Гүйцэтгэлийн үзүүлэлт тайлагнах'],
       requirements:['Контент бүтээх туршлагатай','Canva/Adobe ашиглаж чаддаг'],
       benefits:['Гибрид ажиллах боломж','Мэргэжил дээшлүүлэх дэмжлэг'],
       skills:['Контент төлөвлөлт'] },
-    { id:'proj-mgr', title:'Төслийн менежер', company:'Алтан Гүүр Барилга ХХК', companyId:'altan-guur', location:'Улаанбаатар', cat:'construction', catLabel:'Барилга', type:'Бүтэн цагийн', salaryMin:3200000, salaryMax:4600000, postedDaysAgo:1, badge:'Онцлох',
+    { id:'proj-mgr', title:'Төслийн менежер', company:'Алтан Гүүр Барилга ХХК', companyId:'altan-guur', featured:true, location:'Улаанбаатар', cat:'construction', catLabel:'Барилга', type:'Бүтэн цагийн', salaryMin:3200000, salaryMax:4600000, postedDaysAgo:1, badge:'Онцлох',
       summary:'Барилгын төслийн хугацаа, төсөв, чанарыг нэгдсэн байдлаар удирдана.',
       responsibilities:['Төслийн хуваарь, төсөв удирдах','Гүйцэтгэгч, туслан гүйцэтгэгчтэй зохицуулах','Захиалагчид тайлагнах'],
       requirements:['Барилгын чиглэлээр 4-с дээш жил туршлага','Төслийн удирдлагын гэрчилгээтэй бол давуу тал'],
       benefits:['Тээврийн зардал','Жилийн бонус'],
-      skills:['Төслийн удирдлага'] }
+      skills:['Төслийн удирдлага'] },
+    { id:'tutor-parttime', title:'Хичээлийн зөвлөх (цагийн)', company:'Тэргүүн Боловсрол ХХК', companyId:'tergun-edu', location:'Улаанбаатар', cat:'parttime', catLabel:'Цагийн ажил / Оюутанд', type:'Цагийн ажил · 7 хоногт 10-15 цаг', payType:'hourly', salaryMin:12000, salaryMax:18000, postedDaysAgo:1, badge:'Оюутанд тохиромжтой',
+      summary:'Ахлах ангийн сурагчдад математик, физикийн хичээл заана. Хичээлийн хуваарьтай уялдуулж цагаа өөрөө сонгох боломжтой.',
+      responsibilities:['Долоо хоногт 2-3 удаа хичээл заах','Дасгал ажлын материал бэлтгэх'],
+      requirements:['Тухайн чиглэлээр оюутан буюу төгссөн байх','Тайлбарлах, харилцах сайн чадвартай'],
+      benefits:['Хичээлийн хуваарьтай уялдуулах боломжтой','Цагаар тооцсон тодорхой цалин'],
+      skills:['Багшлах'] },
+    { id:'barista-parttime', title:'Бариста (цагийн)', company:'Кофе Лаб ХХК', companyId:'coffee-lab', location:'Улаанбаатар', cat:'parttime', catLabel:'Цагийн ажил / Оюутанд', type:'Цагийн ажил · Ээлжийн', payType:'hourly', salaryMin:9000, salaryMax:13000, postedDaysAgo:2, badge:'Яаралтай',
+      summary:'Кофе шоп дээр өглөө эсвэл оройн ээлжээр ажиллах оюутан хайж байна. Туршлагагүй ч болно.',
+      responsibilities:['Кофе бэлтгэх','Үйлчлүүлэгчидтэй харилцах','Тоног төхөөрөмж цэвэрлэх'],
+      requirements:['Долоо хоногт багадаа 3 ээлж ажиллах боломжтой','Харилцааны сайн чадвартай'],
+      benefits:['Хоолны хөнгөлөлт','Үнэгүй сургалт (туршлагагүй байсан ч болно)'],
+      skills:['Харилцаа'] },
+    { id:'data-entry-parttime', title:'Дата оруулагч (цагийн, алсаас)', company:'Эрдэнэ Дата ХХК', companyId:'erdene-data', accessible:true, location:'Улаанбаатар', cat:'parttime', catLabel:'Цагийн ажил / Оюутанд', type:'Цагийн ажил · Алсаас', payType:'hourly', salaryMin:8000, salaryMax:11000, postedDaysAgo:3, badge:'Алсаас',
+      summary:'Excel дээр өгөгдөл оруулах, цэгцлэх ажил. Цагийн хуваариа өөрөө сонгоно.',
+      responsibilities:['Excel-д өгөгдөл оруулах','Алдааг шалгаж засах'],
+      requirements:['Excel-ийн үндсэн мэдлэгтэй','Нямбай, нухацтай'],
+      benefits:['Бүрэн алсаас, уян хатан цаг','Долоо хоног бүр цалин тооцно'],
+      skills:['Excel'] },
+    { id:'mobile-dev', title:'Мобайл хөгжүүлэгч (Flutter)', company:'Модон Тек ХХК', companyId:'modon-tek', intlFriendly:true, featured:true, location:'Улаанбаатар', cat:'it', catLabel:'IT / Технологи', type:'Бүтэн цагийн · Гибрид', salaryMin:3100000, salaryMax:4400000, postedDaysAgo:1, badge:'Шинэ',
+      summary:'Компанийн гар утасны аппликейшныг Flutter дээр хөгжүүлж, дэмжинэ.',
+      responsibilities:['Flutter дээр UI хөгжүүлэх','iOS/Android дээр тест хийх','Backend API-тай холбох'],
+      requirements:['Flutter/Dart 1-с дээш жил туршлага','Git ашиглаж чаддаг'],
+      benefits:['Гибрид ажиллах боломж','Тоног төхөөрөмжийн дэмжлэг'],
+      skills:['Flutter','Dart'] },
+    { id:'accountant-jr', title:'Туслах нягтлан бодогч', company:'Тэнгэр Финанс ХХК', companyId:'tenger-finance', location:'Улаанбаатар', cat:'finance', catLabel:'Санхүү', type:'Бүтэн цагийн', salaryMin:1700000, salaryMax:2300000, postedDaysAgo:2, badge:'Шинэ',
+      summary:'Ахлах нягтлан бодогчид туслаж, өдөр тутмын гүйлгээ, баримт бүрдүүлнэ.',
+      responsibilities:['Өдөр тутмын гүйлгээ хөтлөх','Баримт бичиг бүрдүүлэх','Тайланд туслах'],
+      requirements:['Нягтлан бодох бүртгэлийн боловсрол','Шинэ төгссөн ч хамаагүй'],
+      benefits:['Дадлагажуулах хөтөлбөртэй','Эрүүл мэндийн даатгал'],
+      skills:['1С'] },
+    { id:'sales-rep', title:'Худалдааны төлөөлөгч', company:'Ногоон Ирээдүй ХХК', companyId:'nogoon-ireedui', location:'Улаанбаатар', cat:'marketing', catLabel:'Маркетинг', type:'Бүтэн цагийн', salaryMin:1800000, salaryMax:2600000, postedDaysAgo:1, badge:'Яаралтай',
+      summary:'Дэлгүүрийн сүлжээтэй харилцаж, бүтээгдэхүүний борлуулалтыг нэмэгдүүлнэ.',
+      responsibilities:['Харилцагч дэлгүүрүүдээр эргэх','Захиалга авах, хүргэлт зохицуулах'],
+      requirements:['Жолооны үнэмлэхтэй','Харилцааны сайн чадвартай'],
+      benefits:['Шатахууны зардал','Борлуулалтын урамшуулал'],
+      skills:['Борлуулалт'] },
+    { id:'electrician', title:'Цахилгаанчин', company:'Алтан Гүүр Барилга ХХК', companyId:'altan-guur', location:'Улаанбаатар', cat:'construction', catLabel:'Барилга', type:'Бүтэн цагийн', salaryMin:2200000, salaryMax:3000000, postedDaysAgo:3, badge:'Шинэ',
+      summary:'Барилгын талбай дээр цахилгааны угсралт, засвар үйлчилгээ хийнэ.',
+      responsibilities:['Цахилгааны шугам угсрах','Аюулгүй ажиллагааг хангах'],
+      requirements:['Цахилгаанчны мэргэжлийн үнэмлэхтэй','2-с дээш жил туршлага'],
+      benefits:['Талбайн нэмэгдэл','Багаж хэрэгслийн хангамж'],
+      skills:['Цахилгаан угсралт'] },
+    { id:'freelance-photo', title:'Гэрэл зурагчин хайж байна (нэг удаагийн)', company:'Б. Сарантуяа', companyId:'sarantuya-photo', posterType:'individual', location:'Улаанбаатар', cat:'marketing', catLabel:'Маркетинг', type:'Гэрээт · Нэг удаагийн', salaryMin:150000, salaryMax:300000, postedDaysAgo:1, badge:'Хувь хүн',
+      summary:'Гэр бүлийн баяр ёслолын зургийг авах, засварлах гэрэл зурагчин хайж байна.',
+      responsibilities:['Арга хэмжээний явцад зураг авах','Сонгосон зургийг засварлаж өгөх'],
+      requirements:['Өөрийн тоног төхөөрөмжтэй','Ижил төстэй ажлын жишээ (портфолио)'],
+      benefits:['Тухайн өдрийн бүрэн төлбөр'],
+      skills:['Гэрэл зураг'] },
+    { id:'freelance-tutor-eng', title:'Англи хэлний хичээл заах хүн хайж байна', company:'Ц. Мөнхбат', companyId:'munkhbat-tutor', posterType:'individual', location:'Улаанбаатар', cat:'parttime', catLabel:'Цагийн ажил / Оюутанд', type:'Цагийн ажил · Долоо хоногт 2 удаа', payType:'hourly', salaryMin:15000, salaryMax:20000, postedDaysAgo:2, badge:'Хувь хүн',
+      summary:'8-р ангийн хүүхдэдээ англи хэлний хичээл зааж өгөх хүн хайж байна.',
+      responsibilities:['Долоо хоногт 2 удаа гэрээр хичээл заах'],
+      requirements:['Англи хэл дээшлүүлэх арга зүйтэй','Хүүхэдтэй ажиллаж чаддаг'],
+      benefits:['Уян хатан цагийн хуваарь тохирно'],
+      skills:['Багшлах'] }
   ];
 
   const COMPANIES = [
@@ -744,7 +1076,14 @@ Excel сайн мэддэг"></textarea></div>
       advantages:['Ажилтанд зориулсан үнэгүй эмнэлгийн үзлэг','Ээлжийн ажлын тогтмол хуваарьтай','Мэргэшлийн зэрэг горилоход дэмжлэг үзүүлдэг'] },
     { id:'peoples-partner', name:'Пиплс Партнер ХХК', industry:'Хүний нөөцийн зөвлөх үйлчилгээ', founded:2018, size:'10-25 ажилтан', location:'Улаанбаатар',
       about:'Байгууллагуудад ажилтан сонгон шалгаруулах, HR стратегийн зөвлөх үйлчилгээ үзүүлдэг.',
-      advantages:['HR салбарын өргөн сүлжээтэй танилцах боломж','Уян хатан цагийн хуваарь','Гүйцэтгэлд суурилсан урамшуулал'] }
+      advantages:['HR салбарын өргөн сүлжээтэй танилцах боломж','Уян хатан цагийн хуваарь','Гүйцэтгэлд суурилсан урамшуулал'] },
+    { id:'coffee-lab', name:'Кофе Лаб ХХК', industry:'Кафе, HoReCa', founded:2019, size:'10-25 ажилтан', location:'Улаанбаатар',
+      about:'Тав тухтай орчинтой, оюутнуудад ээлтэй цагийн хуваарьтай кофе шопуудын сүлжээ.',
+      advantages:['Хичээлийн хуваарьтай уялдуулах боломжтой ээлж','Ажилтнуудад кофены сургалт үнэгүй','Багийн уур амьсгал халуун дулаан'] },
+    { id:'sarantuya-photo', name:'Б. Сарантуяа', industry:'Хувь хүний зар', founded:2026, size:'—', location:'Улаанбаатар',
+      about:'Энэ зар хувь хүнээс нийтлэгдсэн. Дэлгэрэнгүй мэдээллийг ажлын зараас үзнэ үү.', advantages:[] },
+    { id:'munkhbat-tutor', name:'Ц. Мөнхбат', industry:'Хувь хүний зар', founded:2026, size:'—', location:'Улаанбаатар',
+      about:'Энэ зар хувь хүнээс нийтлэгдсэн. Дэлгэрэнгүй мэдээллийг ажлын зараас үзнэ үү.', advantages:[] }
   ];
 
   const RECOMMENDED = [
@@ -761,27 +1100,85 @@ Excel сайн мэддэг"></textarea></div>
   const THEME_HEX = {gold:'#9A6B1B', sage:'#3F6B4A', red:'#AE3B2C'};
 
   function fmt(n){ return n.toLocaleString('mn-MN'); }
+  function salaryLabel(job){
+    const suffix = job.payType==='hourly' ? (LANG==='en' ? '₮/hr' : '₮/цаг') : '₮';
+    return `${fmt(job.salaryMin)}${suffix} – ${fmt(job.salaryMax)}${suffix}`;
+  }
 
-  function catLabelMap(){ const m={}; JOBS.forEach(j=> m[j.cat]=j.catLabel); return m; }
+  function catLabelMap(){
+    const m={}; JOBS.forEach(j=> m[j.cat]=j.catLabel);
+    if(LANG==='en'){
+      const EN = {it:'IT / Technology', finance:'Finance', marketing:'Marketing', logistics:'Logistics', construction:'Construction', education:'Education', legal:'Legal', health:'Healthcare', hr:'Human Resources', parttime:'Part-time / Student'};
+      Object.keys(m).forEach(k=>{ if(EN[k]) m[k]=EN[k]; });
+    }
+    return m;
+  }
+
+  const BADGE_MAP = {
+    'Шинэ':'badgeNew','Онцлох':'badgeFeatured','Яаралтай':'badgeUrgent','Алсаас':'badgeRemote','Хувь хүн':'badgeIndividual','Оюутанд тохиромжтой':'badgeStudent'
+  };
 
   function jobCardHTML(job){
-    return `<div class="job-card" data-cat="${job.cat}" data-title="${(job.title+' '+job.company).toLowerCase()}" tabindex="0" role="button" onclick="showJobDetail('${job.id}')" onkeydown="if(event.key==='Enter') showJobDetail('${job.id}')">
+    const badgeKey = BADGE_MAP[job.badge];
+    const badgeText = job.featured ? ('⭐ '+t('badgeFeatured')) : (badgeKey ? t(badgeKey) : job.badge);
+    return `<div class="job-card ${job.featured?'job-card-featured':''}" data-cat="${job.cat}" data-title="${(job.title+' '+job.company).toLowerCase()}" tabindex="0" role="button" onclick="showJobDetail('${job.id}')" onkeydown="if(event.key==='Enter') showJobDetail('${job.id}')">
       <div class="job-top">
         <div><div class="job-title">${job.title}</div><button class="job-company" onclick="event.stopPropagation(); showCompanyProfile('${job.companyId}')">${job.company} · ${job.location}</button></div>
-        <span class="job-badge">${job.badge}</span>
+        <span class="job-badge">${badgeText}</span>
       </div>
-      ${job.intlFriendly ? '<span class="intl-pill">🌍 Гадаад дипломтой тохиромжтой</span>' : ''}
-      <div class="job-meta"><span>${job.type}</span><span>${job.postedDaysAgo} хоногийн өмнө нийтлэгдсэн</span></div>
-      <div class="job-bottom"><span class="job-salary">${fmt(job.salaryMin)}₮ – ${fmt(job.salaryMax)}₮</span><span class="job-more">Дэлгэрэнгүй →</span></div>
+      ${job.intlFriendly ? `<span class="intl-pill">🌍 ${t('intlPill')}</span>` : ''}
+      ${job.accessible ? `<span class="intl-pill" style="background:var(--sage-soft); color:var(--sage);">♿ ${t('accessPill')}</span>` : ''}
+      <div class="job-meta"><span>${job.type}</span><span>${job.postedDaysAgo} ${t('daysAgo')}</span></div>
+      <div class="job-bottom"><span class="job-salary">${salaryLabel(job)}</span><span class="job-more">${t('detailsArrow')}</span></div>
     </div>`;
   }
 
+  let currentCategory = 'all';
+  let filterMinSalary = 0;
+  let filterType = 'all';
+  let filterSort = 'newest';
+
+  function toggleAdvFilters(){
+    const panel = document.getElementById('filterPanel');
+    panel.style.display = panel.style.display==='none' ? 'block' : 'none';
+  }
+  function resetAdvancedFilters(){
+    filterMinSalary = 0; filterType = 'all'; filterSort = 'newest';
+    document.getElementById('filterSalarySel').value = '0';
+    document.getElementById('filterTypeSel').value = 'all';
+    document.getElementById('filterSortSel').value = 'newest';
+  }
+  function onFilterChange(){
+    filterMinSalary = parseInt(document.getElementById('filterSalarySel').value) || 0;
+    filterType = document.getElementById('filterTypeSel').value;
+    filterSort = document.getElementById('filterSortSel').value;
+    renderJobGrid(currentCategory);
+  }
+
   function renderJobGrid(filter='all'){
+    currentCategory = filter;
     const grid = document.getElementById('jobGrid');
-    grid.innerHTML = JOBS.filter(j=> filter==='all' || j.cat===filter).map(jobCardHTML).join('');
+    let list = JOBS.filter(j=> filter==='all' || j.cat===filter);
+    if(filterType!=='all') list = list.filter(j=> j.type.includes(filterType));
+    if(filterMinSalary>0) list = list.filter(j=> j.payType==='hourly' || j.salaryMax >= filterMinSalary);
+    list = list.slice();
+    if(filterSort==='salary-high') list.sort((a,b)=> b.salaryMax-a.salaryMax);
+    else if(filterSort==='salary-low') list.sort((a,b)=> a.salaryMin-b.salaryMin);
+    else if(filterSort==='featured') list.sort((a,b)=> (b.featured?1:0)-(a.featured?1:0));
+    else list.sort((a,b)=> a.postedDaysAgo-b.postedDaysAgo);
+    if(filterSort!=='salary-high' && filterSort!=='salary-low') list.sort((a,b)=> (b.featured?1:0)-(a.featured?1:0));
+    grid.innerHTML = list.length ? list.map(jobCardHTML).join('') : `<div class="empty-state"><h3 data-i18n="emptyTitle">${t('emptyTitle')}</h3></div>`;
     document.getElementById('statActive').textContent = JOBS.length;
     const s2 = document.getElementById('statActive2');
     if(s2) s2.textContent = JOBS.length;
+  }
+
+  function renderFeatured(){
+    const strip = document.getElementById('featuredStrip');
+    if(!strip) return;
+    const list = JOBS.filter(j=>j.featured);
+    strip.innerHTML = list.map(jobCardHTML).join('');
+    strip.parentElement.style.display = list.length ? 'block' : 'none';
   }
 
   function renderChips(){
@@ -819,8 +1216,19 @@ Excel сайн мэддэг"></textarea></div>
     showView('home','#jobs');
   }
 
+  function filterCustom(predicate, emptyMsg){
+    document.querySelectorAll('#chips .chip').forEach((c,i)=>c.classList.toggle('active', i===0));
+    const grid = document.getElementById('jobGrid');
+    const list = JOBS.filter(predicate);
+    grid.innerHTML = list.length ? list.map(jobCardHTML).join('') : `<div class="empty-state"><h3>${t('emptyTitle')}</h3><p>${emptyMsg}</p></div>`;
+    showView('home','#jobs');
+  }
+  function filterRemote(){ filterCustom(j=> j.type.includes('Алсаас'), 'Дараа дахин шалгаарай.'); }
+  function filterAccessible(){ filterCustom(j=> j.accessible, 'Дараа дахин шалгаарай.'); }
+
   const DEMAND = [
     {cat:'it', trend:'up', note:'Идэвхтэй ажлын байр хамгийн олон — хамгийн эрэлттэй салбар.'},
+    {cat:'parttime', trend:'up', note:'Хичээлийн улирлын эхээр оюутны цагийн ажлын эрэлт ихэснэ.'},
     {cat:'construction', trend:'up', note:'Том төслүүд нэмэгдэхийн хэрээр эрэлт өсч байна.'},
     {cat:'health', trend:'up', note:'Ээлжийн ажилтны хэрэгцээ тогтмол өндөр.'},
     {cat:'finance', trend:'stable', note:'Туршлагатай мэргэжилтнүүдэд тогтвортой эрэлттэй.'},
@@ -854,6 +1262,21 @@ Excel сайн мэддэг"></textarea></div>
     const grid = document.getElementById('intlJobGrid');
     if(!grid) return;
     grid.innerHTML = JOBS.filter(j=>j.intlFriendly).map(jobCardHTML).join('');
+  }
+
+  function renderCompanies(){
+    const grid = document.getElementById('companiesGrid');
+    if(!grid) return;
+    grid.innerHTML = COMPANIES.map(co=>{
+      const count = JOBS.filter(j=>j.companyId===co.id).length;
+      return `<button class="cat-card" onclick="showCompanyProfile('${co.id}')">
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:10px;">
+          <span class="company-logo" style="width:40px; height:40px; font-size:1.1rem;">${co.name.charAt(0)}</span>
+          <div><h4 style="margin:0;">${co.name}</h4><div class="n" style="margin:0;">${co.industry}</div></div>
+        </div>
+        <div class="cnt">${count} идэвхтэй зар</div>
+      </button>`;
+    }).join('');
   }
 
   function showCompanyProfile(id){
@@ -892,7 +1315,7 @@ Excel сайн мэддэг"></textarea></div>
     grid.innerHTML = RECOMMENDED.map(r=>{
       const job = JOBS.find(j=>j.id===r.jobId);
       return `<button class="rec-card" onclick="showJobDetail('${job.id}')">
-        <div class="job-top"><div><div class="job-title">${job.title}</div><div class="job-company">${job.company}</div></div><span class="job-badge">${fmt(job.salaryMin)}–${fmt(job.salaryMax)}₮</span></div>
+        <div class="job-top"><div><div class="job-title">${job.title}</div><div class="job-company">${job.company}</div></div><span class="job-badge">${salaryLabel(job)}</span></div>
         <div class="rec-reasons">${r.reasons.map(rs=>`<span class="rec-reason">✓ ${rs}</span>`).join('')}</div>
       </button>`;
     }).join('');
@@ -915,7 +1338,7 @@ Excel сайн мэддэг"></textarea></div>
         <div class="jd-block"><h3>Урамшуулал</h3><ul>${job.benefits.map(r=>`<li>${r}</li>`).join('')}</ul></div>
       </div>
       <div class="job-detail-side">
-        <div class="side-salary">${fmt(job.salaryMin)}₮ – ${fmt(job.salaryMax)}₮</div>
+        <div class="side-salary">${salaryLabel(job)}</div>
         <div class="side-row"><span>Ажлын төрөл</span><span>${job.type.split(' · ')[0]}</span></div>
         <div class="side-row"><span>Байршил</span><span>${job.location}</span></div>
         <div class="side-row"><span>Нийтэлсэн</span><span>${job.postedDaysAgo} хоногийн өмнө</span></div>
@@ -934,18 +1357,16 @@ Excel сайн мэддэг"></textarea></div>
     showToast('Илгээгдлээ ✓ — Миний зам цэснээс явцыг хараарай');
   }
 
-  function renderTracker(){
-    const list = document.getElementById('trackerList');
+  function applicationsHTML(){
     if(APPLICATIONS.length===0){
-      list.innerHTML = `<div class="empty-state"><h3>Одоогоор илгээсэн CV алга</h3><p>Ажлын байр сонгоод "Нэг товчоор илгээх" дарахад энд харагдана.</p></div>`;
-      return;
+      return `<div class="empty-state"><h3>Одоогоор илгээсэн CV алга</h3><p>Ажлын байр сонгоод "Нэг товчоор илгээх" дарахад энд харагдана.</p></div>`;
     }
-    list.innerHTML = APPLICATIONS.map(a=>{
+    return APPLICATIONS.map(a=>{
       const job = JOBS.find(j=>j.id===a.jobId);
       return `<div class="track-card">
         <div class="track-top">
           <div><div class="job-title">${job.title}</div><div class="job-company">${job.company}</div></div>
-          <span class="job-salary">${fmt(job.salaryMin)}₮ – ${fmt(job.salaryMax)}₮</span>
+          <span class="job-salary">${salaryLabel(job)}</span>
         </div>
         <div class="track-stages">
           ${STAGES.map((s,i)=>`<div class="track-stage ${i<=a.stage?'done':''}"><div class="dot"></div><div class="lbl">${s}</div></div>`).join('')}
@@ -955,10 +1376,47 @@ Excel сайн мэддэг"></textarea></div>
     }).join('');
   }
 
+  function renderTracker(){
+    document.getElementById('trackerList').innerHTML = applicationsHTML();
+  }
+
+  function renderProfile(){
+    if(!CURRENT_USER){
+      document.getElementById('profileIdentity').innerHTML = `<div class="empty-state" style="width:100%;"><h3>Та нэвтрээгүй байна</h3><p>Профайлаа харахын тулд эхлээд нэвтэрнэ үү.</p></div>`;
+      document.getElementById('profileApplications').innerHTML = '';
+      return;
+    }
+    const initial = CURRENT_USER.name.charAt(0).toUpperCase();
+    document.getElementById('profileIdentity').innerHTML = `
+      <span class="company-logo">${initial}</span>
+      <div>
+        <h1>${CURRENT_USER.name} ${CURRENT_USER.verified ? '<span class="intl-pill" style="margin-left:6px;">🆔 Баталгаажсан</span>' : ''}</h1>
+        <div class="jd-meta"><span>${CURRENT_USER.email}</span></div>
+      </div>`;
+    document.getElementById('pfAppCount').textContent = APPLICATIONS.length;
+    document.getElementById('pfVerifyStatus').textContent = CURRENT_USER.verified ? '✓ Баталгаажсан' : 'Баталгаажаагүй';
+    const btn = document.getElementById('pfVerifyBtn');
+    if(CURRENT_USER.verified){ btn.textContent = '✓ E-Mongolia-гаар баталгаажсан'; btn.disabled = true; }
+    document.getElementById('profileApplications').innerHTML = applicationsHTML();
+  }
+
+  function startEMongoliaVerify(){
+    if(!CURRENT_USER) return;
+    const btn = document.getElementById('pfVerifyBtn');
+    btn.disabled = true;
+    btn.textContent = 'Баталгаажиж байна...';
+    setTimeout(()=>{
+      CURRENT_USER.verified = true;
+      renderProfile();
+      showToast('E-Mongolia-гаар амжилттай баталгаажлаа ✓ (жишээ симуляц)');
+    }, 1600);
+  }
+
   function showView(name, hash){
     document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
     document.getElementById('view-'+name).classList.add('active');
     if(name==='tracker') renderTracker();
+    if(name==='profile') renderProfile();
     window.scrollTo({top:0, behavior:'auto'});
     if(hash){ setTimeout(()=>{ const el=document.querySelector(hash); if(el) el.scrollIntoView({behavior:'smooth'}); }, 30); }
   }
@@ -974,9 +1432,175 @@ Excel сайн мэддэг"></textarea></div>
   }
   document.getElementById('heroSearch').addEventListener('keydown', e=>{ if(e.key==='Enter') runSearch(); });
 
+  let CURRENT_USER = null;
+  let authMode = 'login';
+  let REGISTERED_USERS = [];
+
   function openLogin(){ document.getElementById('loginOverlay').classList.add('show'); }
-  function closeLogin(){ document.getElementById('loginOverlay').classList.remove('show'); }
-  function fakeLogin(){ closeLogin(); showToast('Энэ бол дизайн загвар — жинхэнэ нэвтрэлт хийгдээгүй'); }
+  function closeLogin(){ document.getElementById('loginOverlay').classList.remove('show'); hideAuthError(); }
+
+  function switchAuthTab(mode){
+    authMode = mode;
+    hideAuthError();
+    document.getElementById('tabLogin').classList.toggle('active', mode==='login');
+    document.getElementById('tabRegister').classList.toggle('active', mode==='register');
+    document.getElementById('authNameField').style.display = mode==='register' ? 'block' : 'none';
+    document.getElementById('authConfirmField').style.display = mode==='register' ? 'block' : 'none';
+    document.getElementById('authSubmit').textContent = mode==='register' ? 'Бүртгүүлэх' : 'Нэвтрэх';
+  }
+
+  function showAuthError(msg){ const el=document.getElementById('authError'); el.textContent=msg; el.style.display='block'; }
+  function hideAuthError(){ document.getElementById('authError').style.display='none'; }
+
+  document.getElementById('authForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    hideAuthError();
+    const email = document.getElementById('authEmail').value.trim().toLowerCase();
+    const password = document.getElementById('authPassword').value;
+    const nameInput = document.getElementById('authName').value.trim();
+
+    if(authMode==='register'){
+      const confirm = document.getElementById('authConfirm').value;
+      if(!nameInput){ showAuthError('Овог нэрээ бичнэ үү.'); return; }
+      if(password.length<6){ showAuthError('Нууц үг доод тал нь 6 тэмдэгт байх ёстой.'); return; }
+      if(password!==confirm){ showAuthError('Нууц үг таарахгүй байна.'); return; }
+      if(REGISTERED_USERS.find(u=>u.email===email)){ showAuthError('Энэ и-мэйл хаягаар өмнө нь бүртгүүлсэн байна — Нэвтрэх таб руу шилжинэ үү.'); return; }
+      const user = { name:nameInput, email, password, verified:false };
+      REGISTERED_USERS.push(user);
+      CURRENT_USER = user;
+    } else {
+      const found = REGISTERED_USERS.find(u=>u.email===email);
+      if(!found){ showAuthError('Ийм бүртгэл олдсонгүй. "Шинээр бүртгүүлэх" таб руу шилжинэ үү.'); return; }
+      if(found.password!==password){ showAuthError('Нууц үг буруу байна.'); return; }
+      CURRENT_USER = found;
+    }
+
+    document.getElementById('pfName').value = CURRENT_USER.name;
+    document.getElementById('pfEmail').value = CURRENT_USER.email;
+    this.reset();
+    closeLogin();
+    updateAuthUI();
+    showToast(`Тавтай морил, ${CURRENT_USER.name}!`);
+  });
+
+  function updateAuthUI(){
+    const nav = document.getElementById('navCta');
+    if(CURRENT_USER){
+      const initial = CURRENT_USER.name.charAt(0).toUpperCase();
+      nav.innerHTML = `
+        <button class="btn btn-solid" onclick="showView('cv')">CV байршуулах</button>
+        <div class="profile-btn-wrap">
+          <button class="btn" onclick="toggleProfileMenu()"><span class="avatar-dot" style="margin-right:8px;">${initial}</span>${CURRENT_USER.name}</button>
+          <div class="profile-dropdown" id="profileDropdown">
+            <button onclick="closeProfileMenu(); showView('profile');">Профайл харах</button>
+            <button onclick="closeProfileMenu(); showView('tracker');">Миний зам</button>
+            <button onclick="logout()">Гарах</button>
+          </div>
+        </div>`;
+    } else {
+      nav.innerHTML = `
+        <button class="btn" onclick="openLogin()">Нэвтрэх</button>
+        <button class="btn btn-solid" onclick="showView('cv')">CV байршуулах</button>`;
+    }
+  }
+
+  function toggleProfileMenu(){ document.getElementById('profileDropdown').classList.toggle('show'); }
+  function closeProfileMenu(){ const d = document.getElementById('profileDropdown'); if(d) d.classList.remove('show'); }
+  document.addEventListener('click', function(e){
+    const wrap = document.querySelector('.profile-btn-wrap');
+    if(wrap && !wrap.contains(e.target)) closeProfileMenu();
+  });
+
+  function logout(){
+    CURRENT_USER = null;
+    updateAuthUI();
+    showToast('Гарлаа');
+    showView('home');
+  }
+
+  document.getElementById('profileForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!CURRENT_USER){ showToast('Эхлээд нэвтэрнэ үү'); return; }
+    CURRENT_USER.name = document.getElementById('pfName').value.trim() || CURRENT_USER.name;
+    CURRENT_USER.email = document.getElementById('pfEmail').value.trim() || CURRENT_USER.email;
+    CURRENT_USER.phone = document.getElementById('pfPhone').value.trim();
+    CURRENT_USER.location = document.getElementById('pfLocation').value.trim();
+    updateAuthUI();
+    renderProfile();
+    showToast('Мэдээлэл хадгалагдлаа');
+  });
+
+  // ---- AI Зөвлөх (жишээ, дүрэмд суурилсан) ----
+  function toggleAiPanel(){ document.getElementById('aiPanel').classList.toggle('show'); }
+
+  function aiBotBubble(text){
+    const wrap = document.getElementById('aiMessages');
+    wrap.insertAdjacentHTML('beforeend', `<div class="ai-msg bot">${text}</div>`);
+    wrap.scrollTop = wrap.scrollHeight;
+  }
+  function aiUserBubble(text){
+    const wrap = document.getElementById('aiMessages');
+    wrap.insertAdjacentHTML('beforeend', `<div class="ai-msg user">${text}</div>`);
+    wrap.scrollTop = wrap.scrollHeight;
+  }
+
+  function getAIResponse(q){
+    const s = q.toLowerCase();
+    if(s.includes('тохирох ажил') || s.includes('санал')){
+      const skillsField = document.getElementById('cvSkills');
+      const skills = skillsField && skillsField.value ? skillsField.value.split(',').map(x=>x.trim()).filter(Boolean) : [];
+      if(skills.length){
+        const match = JOBS.filter(j=> j.skills.some(sk=> skills.some(us=> sk.toLowerCase().includes(us.toLowerCase()))));
+        if(match.length) return `Таны CV-д бичсэн (${skills.join(', ')}) ур чадвартай тохирох ${match.length} ажлын байр байна — жишээ нь "${match[0].title}" (${match[0].company}). "Ажлын байр" цэснээс бүгдийг харна уу.`;
+      }
+      return 'Эхлээд "CV байршуулах" хэсэгт ур чадвараа бичвэл танд тохирох ажлыг тодорхой зааж өгье. Одоохондоо "Танд тохирсон" хэсгийг үзээрэй.';
+    }
+    if(s.includes('cv') || s.includes('резюме') || s.includes('намтар')){
+      return 'CV сайжруулах 3 гол зүйл: 1) Түлхүүр үгсийг ажлын зарын шаардлагатай тааруул. 2) "Хариуцсан" гэхийн оронд тоон үр дүн бич (жишээ: "20%-иар нэмэгдүүлсэн"). 3) Нэг хуудсанд багтаа. Дэлгэрэнгүй зөвлөмжийг "CV байршуулах" хэсэгт хадгалахад автоматаар үзнэ.';
+    }
+    if(s.includes('цалин')){
+      return 'Цалингийн хэлэлцээрт бэлдэхдээ: салбарын дундаж цалинг эхлээд шалга ("Цалингийн мэдээлэл" хэсэг), туршлага/ур чадвараа тоогоор баталгаажуул, мөн доод хязгаараа биш "боломжит хязгаар"-аа тодорхойлж яриарай.';
+    }
+    if(s.includes('ярилцлага')){
+      return 'Ярилцлагад бэлдэхдээ: компанийн үйл ажиллагааг судал (компанийн профайл хуудаснаас), өөрийн ажлын жишээг "нөхцөл байдал → үйлдэл → үр дүн" бүтцээр бэлд, мөн эргүүлж асуух 2-3 асуулт бэлдээрэй.';
+    }
+    if(s.includes('оюутан') || s.includes('цагийн')){
+      return 'Оюутанд тохиромжтой цагийн ажлууд "Цагийн ажил / Оюутанд" ангилалд байгаа — хичээлийн хуваарьтай уялдуулах боломжтой ажлууд голдуу орсон байгаа.';
+    }
+    if(s.includes('гадаад') || s.includes('диплом')){
+      return 'Гадаадад сурч төгссөн бол дипломоо БМИҮЗ-өөр баталгаажуулах шаардлагатай. Дэлгэрэнгүйг нүүр хуудасны "Гадаадаас ирсэн төгсөгчдөд" хэсгээс үзээрэй.';
+    }
+    if(s.includes('компани') || s.includes('байгууллага')){
+      return 'Компани судлахдаа тухайн байгууллагын профайл хуудсыг үзээрэй — салбар, хэмжээ, ажилтны давуу тал, идэвхтэй бүх зар нь нэг дор харагдана. "Компаниуд" цэснээс бүгдийг жагсаалтаар үзэж болно.';
+    }
+    if(s.includes('ковер лет') || s.includes('хамтарсан бичиг') || s.includes('motivation') || s.includes('өргөдөл')){
+      return 'Хамтарсан бичиг (cover letter) бичихдээ: 1) яагаад яг энэ компанид ажиллахыг хүсч буйгаа тодорхой бич, 2) CV-нд байгаа 1-2 амжилтаа энэ ажилтай холбож тайлбарла, 3) 3-4 догол мөрөнд багтаа.';
+    }
+    if(s.includes('татгалзсан') || s.includes('хариу ирээгүй') || s.includes('reject')){
+      return 'Хариу удаж байвал 1-2 долоо хоногийн дараа эелдгээр сануулах имэйл бичиж болно. Татгалзсан бол шалтгааныг эелдгээр асууж, дараагийн удаад юуг сайжруулахаа мэдэж болно — энэ бол ердийн, элбэг тохиолддог зүйл.';
+    }
+    if(s.includes('карьер') || s.includes('мэргэжил солих') || s.includes('шилжих')){
+      return 'Мэргэжил/салбар солихдоо шилжүүлж болох ур чадвараа ("transferable skills") эхлээд тодорхойлоорой — жишээ нь харилцаа, төслийн удирдлага. CV-даа тэдгээрийг тодруулж бичээрэй.';
+    }
+    if(s.includes('сайн уу') || s.includes('сайн байна')){
+      return 'Сайн байна уу! Ажил хайх, CV, цалин, ярилцлагын аль нэгээр нь асуугаарай — туслахад бэлэн байна.';
+    }
+    return 'Энэ талаар тодорхой жишээ бэлэн байхгүй байна. Одоогоор дараах сэдвүүдээр хамгийн сайн туслаж чадна: тохирох ажил олох, CV сайжруулах, цалин хэлэлцэх, ярилцлагад бэлдэх, компани судлах, оюутны цагийн ажил, гадаад диплом баталгаажуулалт. Дээрх санал болгосон асуултуудаас сонгож эсвэл өөрөөр дахин тодорхой асууж үзээрэй.';
+  }
+
+  function askAi(text){
+    aiUserBubble(text);
+    setTimeout(()=> aiBotBubble(getAIResponse(text)), 350);
+  }
+
+  document.getElementById('aiForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const input = document.getElementById('aiInput');
+    const text = input.value.trim();
+    if(!text) return;
+    askAi(text);
+    input.value = '';
+  });
 
   function showToast(msg){
     const t = document.getElementById('toast');
@@ -1017,9 +1641,21 @@ Excel сайн мэддэг"></textarea></div>
     showToast('CV хадгалагдлаа — дэлгэрэнгүй зөвлөмжийг доор үзнэ үү');
   });
 
+  let posterType = 'company';
+  function setPosterType(type){
+    posterType = type;
+    document.getElementById('posterTypeCompany').classList.toggle('active', type==='company');
+    document.getElementById('posterTypeIndividual').classList.toggle('active', type==='individual');
+    document.getElementById('jpPosterNameLabel').textContent = type==='company' ? 'Байгууллагын нэр' : 'Таны нэр';
+    document.getElementById('jpPosterName').placeholder = type==='company' ? 'Жишээ нь: Модон Тек ХХК' : 'Жишээ нь: Б. Сарантуяа';
+    document.getElementById('jpContactField').style.display = type==='individual' ? 'block' : 'none';
+  }
+
+  function slugify(str){
+    return 'co-' + str.toLowerCase().replace(/[^a-zа-яөүёA-ZА-ЯӨҮЁ0-9]+/gi,'-').replace(/^-+|-+$/g,'') + '-' + Math.floor(Math.random()*1000);
+  }
+
   function populateEmployerForm(){
-    const compSel = document.getElementById('jpCompany');
-    compSel.innerHTML = COMPANIES.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
     const catSel = document.getElementById('jpCat');
     const labels = catLabelMap();
     catSel.innerHTML = Object.entries(labels).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
@@ -1028,8 +1664,7 @@ Excel сайн мэддэг"></textarea></div>
 
   document.getElementById('jobPostForm').addEventListener('submit', function(e){
     e.preventDefault();
-    const companyId = document.getElementById('jpCompany').value;
-    const co = COMPANIES.find(c=>c.id===companyId);
+    const posterName = document.getElementById('jpPosterName').value.trim() || (posterType==='company' ? 'Шинэ байгууллага' : 'Хувь хүн');
     const cat = document.getElementById('jpCat').value;
     const labels = catLabelMap();
     const title = document.getElementById('jpTitle').value.trim() || 'Шинэ ажлын байр';
@@ -1038,20 +1673,41 @@ Excel сайн мэддэг"></textarea></div>
     const salaryMax = parseInt(document.getElementById('jpSalaryMax').value)||salaryMin;
     const summary = document.getElementById('jpSummary').value.trim() || 'Дэлгэрэнгүй мэдээллийг ярилцлагын үеэр лавлана уу.';
     const reqLines = document.getElementById('jpReq').value.split('\n').map(s=>s.trim()).filter(Boolean);
+    const featured = document.getElementById('jpFeatured').checked;
+    const contact = document.getElementById('jpContact').value.trim();
+
+    let co = COMPANIES.find(c=> c.name.toLowerCase()===posterName.toLowerCase());
+    if(!co){
+      co = { id: slugify(posterName), name: posterName, industry: posterType==='individual' ? 'Хувь хүний зар' : 'Шинээр нэвтэрсэн байгууллага', founded:2026, size:'—', location:'Улаанбаатар',
+        about: posterType==='individual' ? 'Энэ зар хувь хүнээс нийтлэгдсэн. Дэлгэрэнгүй мэдээллийг ажлын зараас үзнэ үү.' : 'Энэ байгууллага саяхан анх удаа ажлын зар байршуулж байна.',
+        advantages: [] };
+      COMPANIES.push(co);
+    }
     const newJob = {
-      id:'job-'+Date.now(), title, company:co.name, companyId:co.id, location:co.location, cat, catLabel:labels[cat]||cat,
-      type, salaryMin, salaryMax, postedDaysAgo:0, badge:'Шинэ',
-      summary, responsibilities:['Дэлгэрэнгүй үүрэг ярилцлагын үеэр тодруулагдана.'],
+      id:'job-'+Date.now(), title, company:co.name, companyId:co.id, posterType, location:co.location, cat, catLabel:labels[cat]||cat,
+      type, salaryMin, salaryMax, postedDaysAgo:0, badge:'Шинэ', featured,
+      summary: contact ? summary + ` Холбогдох: ${contact}.` : summary,
+      responsibilities:['Дэлгэрэнгүй үүрэг ярилцлагын үеэр тодруулагдана.'],
       requirements: reqLines.length ? reqLines : ['Тодорхой шаардлага одоогоор нэмэгдээгүй байна.'],
       benefits:['Дэлгэрэнгүйг ярилцлагаас лавлана уу.'], skills:[]
     };
     JOBS.unshift(newJob);
-    renderChips(); renderJobGrid('all'); renderCategories(); renderDemand(); renderIntlJobs();
+    renderChips(); renderJobGrid('all'); renderFeatured(); renderCategories(); renderDemand(); renderIntlJobs(); renderCompanies();
     this.reset();
+    setPosterType('company');
     populateEmployerForm();
-    showToast('Ажлын зар нийтлэгдлээ ✓');
     showJobDetail(newJob.id);
+    if(featured){
+      openFeaturedPay();
+    } else {
+      showToast('Ажлын зар нийтлэгдлээ ✓');
+    }
   });
+
+  function openFeaturedPay(){ document.getElementById('featuredPayOverlay').classList.add('show'); }
+  function closeFeaturedPay(){ document.getElementById('featuredPayOverlay').classList.remove('show'); }
+  function openContact(){ document.getElementById('contactOverlay').classList.add('show'); }
+  function closeContact(){ document.getElementById('contactOverlay').classList.remove('show'); }
 
   // reveal on scroll
   const io = new IntersectionObserver((entries)=>{
@@ -1062,11 +1718,15 @@ Excel сайн мэддэг"></textarea></div>
   // init
   renderChips();
   renderJobGrid('all');
+  renderFeatured();
   renderCategories();
   renderRecommended();
   renderDemand();
   renderIntlJobs();
+  renderCompanies();
   populateEmployerForm();
+  updateAuthUI();
+  aiBotBubble('Сайн байна уу! Би "Зам"-ын жишээ зөвлөх. Ажил хайх, CV, цалингийн хэлэлцээрийн талаар асуугаарай — эсвэл доорх санал болгосон асуултаас сонгоно уу.');
 </script>
 
 </body>
